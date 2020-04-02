@@ -4,11 +4,11 @@ Platforma de review pentru restaurante.
 
 ## ToDos
 
-- [ ] Ratings table + entity
+- [X] Ratings table + entity
 - [ ] Columns constraints
-- [ ] In-memory db H2
-- [ ] MySql connection
-- [ ] Dev and prod spring profiles
+- [X] In-memory db H2
+- [X] MySql connection
+- [X] Dev and prod spring profiles
 - [ ] Repositories
 - [ ] Services
 - [ ] Logging
