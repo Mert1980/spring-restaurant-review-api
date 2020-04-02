@@ -11,20 +11,24 @@ import lombok.*;
 @Entity
 @Table
 public class User extends BaseEntity {
-	private String email;
+    @Column(length = 25, nullable = false, unique = true)
+    private String email;
 
-	private String passwordHash;
+    @Column(length = 60, nullable = false)
+    private String passwordHash;
 
-	private String firstName;
+    @Column(length = 25, nullable = false)
+    private String firstName;
 
-	private String lastName;
+    @Column(length = 25, nullable = false)
+    private String lastName;
 
-	@Lob
-	private Byte[] profilePicture;
+    @Lob
+    private Byte[] profilePicture;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<RefreshToken> refreshTokens;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<RefreshToken> refreshTokens;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Review> reviews;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Review> reviews;
 }

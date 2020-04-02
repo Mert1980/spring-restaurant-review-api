@@ -10,22 +10,19 @@ import lombok.*;
 @Entity
 @Table
 public class Ratings extends BaseEntity {
+    @Enumerated(value = EnumType.STRING)
+    private RatingType type;
 
-	@Enumerated(value = EnumType.STRING)
-	private RatingType type;
+    private Integer oneStarCount;
 
-	private Integer oneStarCount;
+    private Integer twoStarCount;
 
-	private Integer twoStarCount;
+    private Integer threeStarCount;
 
-	private Integer threeStarCount;
+    private Integer fourStarCount;
 
-	private Integer fourStarCount;
+    private Integer fiveStarCount;
 
-	private Integer fiveStarCount;
-
-	@ManyToOne
-	private Restaurant restaurant;
-
-
+    @ManyToOne
+    private Restaurant restaurant;
 }

@@ -11,21 +11,22 @@ import lombok.*;
 @Entity
 @Table
 public class Restaurant extends BaseEntity {
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-	private Set<Address> addresses;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+    private Set<Address> addresses;
 
-	@ManyToMany
-	@JoinTable(name = "restaurant_category", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories;
+    @ManyToMany
+    @JoinTable(name = "restaurant_category", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
-	private String name;
+    @Column(length = 25, nullable = false, unique = true)
+    private String name;
 
-	@Lob
-	private Byte[] logo;
+    @Lob
+    private Byte[] logo;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-	private Set<Review> reviews;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+    private Set<Review> reviews;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-	private Set<Ratings> rating;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+    private Set<Ratings> rating;
 }

@@ -11,8 +11,9 @@ import lombok.*;
 @Entity
 @Table
 public class Category extends BaseEntity {
-	private String name;
+    @Column(length = 15, nullable = false, unique = true)
+    private String name;
 
-	@ManyToMany(mappedBy = "categories")
-	private Set<Restaurant> restaurants;
+    @ManyToMany(mappedBy = "categories")
+    private Set<Restaurant> restaurants;
 }

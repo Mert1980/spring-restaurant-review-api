@@ -11,12 +11,17 @@ import lombok.*;
 @Entity
 @Table
 public class RefreshToken extends BaseEntity {
-	@ManyToOne
-	private User user;
+    @ManyToOne
+    private User user;
 
-	private String token;
+    @Column(length = 38, nullable = false)
+    private String token;
 
-	private Date createdAt;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date createdAt;
 
-	private Date revokedAt;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(nullable = true)
+    private Date revokedAt;
 }

@@ -5,17 +5,18 @@ Platforma de review pentru restaurante.
 ## ToDos
 
 - [X] Ratings table + entity
-- [ ] Columns constraints
+- [X] Columns constraints
 - [X] In-memory db H2
 - [X] MySql connection
 - [X] Dev and prod spring profiles
-- [ ] Repositories
+- [X] Repositories
 - [ ] Services
-- [ ] Logging
-- [ ] Aspect
+- [X] Logging
+- [X] Aspect
 - [ ] Exception handling
 - [ ] Pagination for restaurants and reviews
 - [ ] Unit Tests
+- [ ] Request models validation
 - [ ] Controllers
 - [ ] Security (roles: admin, restaurant agent and user) JWT
 - [ ] Routing + secured routes

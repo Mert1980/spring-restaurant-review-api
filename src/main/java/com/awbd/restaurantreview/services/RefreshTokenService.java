@@ -1,8 +1,6 @@
-package com.awbd.restaurantreview.service;
+package com.awbd.restaurantreview.services;
 
 public interface RefreshTokenService  {
-
     void createToken();
     void revokeToken();
-
 }

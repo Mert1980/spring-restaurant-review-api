@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.awbd.restaurantreview.domain.GeographicLocation;
 
-
 @Repository
 public interface GeographicLocationRepository extends CrudRepository<GeographicLocation, UUID> {
 

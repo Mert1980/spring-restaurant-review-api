@@ -8,6 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 public abstract class BaseEntity {
-	@Id
-	private UUID id;
+    @Id
+    private UUID id;
 }

@@ -1,4 +1,4 @@
-package com.awbd.restaurantreview.service;
+package com.awbd.restaurantreview.services;
 
 import com.awbd.restaurantreview.repositories.RefreshTokenRepository;
 import com.awbd.restaurantreview.repositories.UserRepository;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IdentityServiceImpl implements IdentityService {
-
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
@@ -33,5 +32,4 @@ public class IdentityServiceImpl implements IdentityService {
     public void changePassword(Long userId, String currentPassword, String newPassword){
 
     }
-
 }

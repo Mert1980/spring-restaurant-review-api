@@ -1,4 +1,4 @@
-package com.awbd.restaurantreview.service;
+package com.awbd.restaurantreview.services;
 
 import com.awbd.restaurantreview.repositories.RestaurantRepository;
 
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
-
     private final RestaurantRepository restaurantRepository;
 
     @Autowired
@@ -15,5 +14,4 @@ public class RestaurantServiceImpl implements RestaurantService {
         this.restaurantRepository = restaurantRepository;
 
     }
-
 }

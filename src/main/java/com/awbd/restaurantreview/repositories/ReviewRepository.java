@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.awbd.restaurantreview.domain.Review;
 
-
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, UUID> {
 

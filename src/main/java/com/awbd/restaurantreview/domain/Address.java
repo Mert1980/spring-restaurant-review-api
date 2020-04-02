@@ -10,17 +10,21 @@ import lombok.*;
 @Entity
 @Table
 public class Address extends BaseEntity {
-	@OneToOne(cascade = CascadeType.ALL)
-	private GeographicLocation geographicLocation;
+    @OneToOne(cascade = CascadeType.ALL)
+    private GeographicLocation geographicLocation;
 
-	private String country;
+    @Column(length = 25, nullable = false)
+    private String country;
 
-	private String city;
+    @Column(length = 25, nullable = false)
+    private String city;
 
-	private String street;
+    @Column(length = 30, nullable = false)
+    private String street;
 
-	private String number;
+    @Column(length = 5, nullable = false)
+    private String number;
 
-	@ManyToOne
-	private Restaurant restaurant;
+    @ManyToOne
+    private Restaurant restaurant;
 }

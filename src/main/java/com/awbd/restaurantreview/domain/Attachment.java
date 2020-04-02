@@ -10,14 +10,14 @@ import lombok.*;
 @Entity
 @Table
 public class Attachment extends BaseEntity {
-	private String fileName;
+    private String fileName;
 
-	@Enumerated(value = EnumType.STRING)
-	private AttachmentType type;
+    @Enumerated(value = EnumType.STRING)
+    private AttachmentType type;
 
-	@Lob
-	private Byte[] content;
+    @Lob
+    private Byte[] content;
 
-	@ManyToOne
-	private Review review;
+    @ManyToOne
+    private Review review;
 }

@@ -12,26 +12,34 @@ import lombok.*;
 @Entity
 @Table
 public class Review extends BaseEntity {
-	@ManyToOne
-	private Restaurant restaurant;
+    @ManyToOne
+    private Restaurant restaurant;
 
-	@ManyToOne
-	private User user;
+    @ManyToOne
+    private User user;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "review")
-	private Set<Attachment> attachments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "review")
+    private Set<Attachment> attachments;
 
-	private String text;
+    @Column(length = 150, nullable = false)
+    private String text;
 
-	private Date createdAt;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date createdAt;
 
-	private Integer batroomQuality;
+    @Column(nullable = false)
+    private Integer batroomQuality;
 
-	private Integer staff;
+    @Column(nullable = false)
+    private Integer staff;
 
-	private Integer cleanliness;
+    @Column(nullable = false)
+    private Integer cleanliness;
 
-	private Integer driveThru;
+    @Column(nullable = false)
+    private Integer driveThru;
 
-	private Integer deliverySpeed;
+    @Column(nullable = false)
+    private Integer deliverySpeed;
 }
