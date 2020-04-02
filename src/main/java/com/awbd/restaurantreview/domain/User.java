@@ -23,6 +23,9 @@ public class User extends BaseEntity {
     @Column(length = 25, nullable = false)
     private String lastName;
 
+    @Enumerated(value = EnumType.STRING)
+    private RoleType type;
+
     @Lob
     private Byte[] profilePicture;
 
