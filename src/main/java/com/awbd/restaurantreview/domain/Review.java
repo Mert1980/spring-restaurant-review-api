@@ -25,13 +25,13 @@ public class Review extends BaseEntity {
 
 	private Date createdAt;
 
-	private Double batroomQuality;
+	private Integer batroomQuality;
 
-	private Double staff;
+	private Integer staff;
 
-	private Double cleanliness;
+	private Integer cleanliness;
 
-	private Double driveThru;
+	private Integer driveThru;
 
-	private Double deliverySpeed;
+	private Integer deliverySpeed;
 }

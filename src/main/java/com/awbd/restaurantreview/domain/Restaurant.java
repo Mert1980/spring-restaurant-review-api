@@ -23,8 +23,9 @@ public class Restaurant extends BaseEntity {
 	@Lob
 	private Byte[] logo;
 
-	private Double rating;
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
 	private Set<Review> reviews;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+	private Set<Ratings> rating;
 }
