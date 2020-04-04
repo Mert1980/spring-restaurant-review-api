@@ -1,36 +1,36 @@
 package com.awbd.restaurantreview.security.jwt;
 
-
-import com.awbd.restaurantreview.models.SignIn;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
-
+import java.util.ArrayList;
+import java.util.Set;
+import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.awbd.restaurantreview.models.SignIn;
 
-@Component
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    public static final String SECRET = "SecretKeyToGenJWTs";
-    public static final long EXPIRATION_TIME = 864_000_000; // 10 days
-    public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String HEADER_STRING = "Authorization";
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    private static final String LOGIN_ENDPOINT = "/login";
+    private static final String HEADER_STRING = "Authorization";
+    private static final String TOKEN_PREFIX = "Bearer ";
+    private final AuthenticationManager authenticationManager;
+    private final JwtHandler jwtHandler;
 
-    private AuthenticationManager authenticationManager;
-    private JWTAuthentificationHandler authentificationHandler;
-
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    @Autowired
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtHandler jwtHandler) {
         this.authenticationManager = authenticationManager;
+        this.jwtHandler = jwtHandler;
+        setFilterProcessesUrl(LOGIN_ENDPOINT);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     new UsernamePasswordAuthenticationToken(
                         signInModel.getEmail(),
                         signInModel.getPassword(),
-                            new ArrayList<>())
+                        new ArrayList<>())
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -56,9 +56,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-
-        SignIn signInModel = new ObjectMapper()
-                    .readValue(req.getInputStream(), SignIn.class);
-        String token = authentificationHandler.createToken(signInModel.getId(),signInModel.getEmail());
+        User authenticatedUser = (User)auth.getPrincipal();
+        Set<String> authorities = AuthorityUtils.authorityListToSet(authenticatedUser.getAuthorities());
+        String token = jwtHandler.createToken(authenticatedUser.getUsername(), authorities);
+        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }

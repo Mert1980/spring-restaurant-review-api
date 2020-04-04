@@ -1,5 +1,12 @@
 package com.awbd.restaurantreview.security;
 
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -7,10 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.awbd.restaurantreview.domain.User;
 import com.awbd.restaurantreview.repositories.UserRepository;
-
-import static java.util.Collections.emptyList;
-
-import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,11 +25,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isEmpty()) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
             throw new UsernameNotFoundException(email);
         }
-        User user = userOptional.get();
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPasswordHash(), emptyList());
+        User user = optionalUser.get();
+        Collection<? extends GrantedAuthority> authorities = Arrays.stream(new String[] { user.getType().toString() })
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPasswordHash(), authorities);
     }
 }

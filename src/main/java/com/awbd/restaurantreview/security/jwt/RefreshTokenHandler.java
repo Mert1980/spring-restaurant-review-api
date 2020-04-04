@@ -1,14 +1,12 @@
 package com.awbd.restaurantreview.security.jwt;
 
+import org.springframework.stereotype.Component;
+
 import com.awbd.restaurantreview.domain.RefreshToken;
 import com.awbd.restaurantreview.domain.User;
 
-import org.springframework.stereotype.Component;
-
 @Component
-public interface JWTRefreshTokenHandler {
-
+public interface RefreshTokenHandler {
     RefreshToken createRefreshToken(User user);
     boolean validateRefreshToken(RefreshToken refreshToken);
-
 }

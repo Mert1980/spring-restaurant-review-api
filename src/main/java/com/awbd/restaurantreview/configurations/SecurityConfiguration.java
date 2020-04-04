@@ -1,6 +1,7 @@
 package com.awbd.restaurantreview.configurations;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,50 +13,46 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-
-import static com.awbd.restaurantreview.security.SecurityConstants.SIGN_UP_URL;
+import org.springframework.context.annotation.Configuration;
 
 import com.awbd.restaurantreview.security.UserDetailsServiceImpl;
-import com.awbd.restaurantreview.security.jwt.JWTAuthenticationFilter;
-import com.awbd.restaurantreview.security.jwt.JWTAuthorizationFilter;
+import com.awbd.restaurantreview.security.jwt.JwtAuthenticationFilter;
+import com.awbd.restaurantreview.security.jwt.JwtAuthorizationFilter;
+import com.awbd.restaurantreview.security.jwt.JwtHandler;
+import com.awbd.restaurantreview.security.jwt.JwtHandlerImpl;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private UserDetailsServiceImpl userDetailsService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final ApplicationProperties applicationProperties;
 
     @Autowired
-    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, ApplicationProperties applicationProperties) {
         this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.applicationProperties = applicationProperties;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-            .disable();
+        http.csrf().disable();
 
-        http.headers()
-            .frameOptions()
-            .disable();
+        http.headers().frameOptions().disable();
 
-        http.cors()
-            .disable();
+        http.cors().disable();
 
         http.authorizeRequests()
-            .antMatchers( HttpMethod.POST, SIGN_UP_URL, "/h2-console/**")
-            .permitAll()
+            .antMatchers(HttpMethod.POST, "/auth/sign-up", "/h2-console/**", "/login").permitAll()
             .anyRequest().authenticated()
-                .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                // this disables session creation on Spring Security
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .and()
+            .addFilter(jwtAuthenticationFilter())
+            .addFilter(jwtAuthorizationFilter())
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
@@ -63,5 +60,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        return new JwtAuthenticationFilter(authenticationManager(), new JwtHandlerImpl(applicationProperties));
+    }
+
+    private JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
+        return new JwtAuthorizationFilter(authenticationManager(), new JwtHandlerImpl(applicationProperties));
     }
 }

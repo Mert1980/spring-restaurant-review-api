@@ -1,63 +1,38 @@
 package com.awbd.restaurantreview.services;
 
 import java.util.Optional;
-import java.util.UUID;
-
-import com.awbd.restaurantreview.domain.RefreshToken;
-import com.awbd.restaurantreview.domain.User;
-import com.awbd.restaurantreview.models.JsonWebToken;
-import com.awbd.restaurantreview.repositories.RefreshTokenRepository;
-import com.awbd.restaurantreview.repositories.UserRepository;
-import com.awbd.restaurantreview.security.jwt.JWTAuthentificationHandler;
-import com.awbd.restaurantreview.security.jwt.JWTRefreshTokenHandler;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.awbd.restaurantreview.domain.User;
+import com.awbd.restaurantreview.exceptions.AlreadyExistsException;
+import com.awbd.restaurantreview.exceptions.BaseException;
+import com.awbd.restaurantreview.repositories.RefreshTokenRepository;
+import com.awbd.restaurantreview.repositories.UserRepository;
+import com.awbd.restaurantreview.security.jwt.JwtHandler;
+import com.awbd.restaurantreview.security.jwt.RefreshTokenHandler;
+
 @Service
 public class IdentityServiceImpl implements IdentityService {
     private final UserRepository userRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final JWTAuthentificationHandler jwtAuthentificationHandler;
-    private final JWTRefreshTokenHandler jwtRefreshTokenHandler;
 
     @Autowired
-    public IdentityServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository, BCryptPasswordEncoder bCryptPasswordEncoder, JWTAuthentificationHandler jwtAuthentificationHandler, JWTRefreshTokenHandler jwtRefreshTokenHandler) {
-
+    public IdentityServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository, BCryptPasswordEncoder bCryptPasswordEncoder, JwtHandler jwtHandler, RefreshTokenHandler refreshTokenHandler) {
         this.userRepository = userRepository;
-        this.refreshTokenRepository = refreshTokenRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.jwtAuthentificationHandler = jwtAuthentificationHandler;
-        this.jwtRefreshTokenHandler = jwtRefreshTokenHandler;
     }
 
     @Override
-    public void signUp(String firstName, String lastName, String email, String password) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()){
-            return; // TODO: exception
+    public void signUp(String firstName, String lastName, String email, String password) throws BaseException {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            throw new AlreadyExistsException("email", email);
         }
         String passwordHashed = bCryptPasswordEncoder.encode(password);
-        User newUser = new User(firstName, lastName, email, passwordHashed);
-        newUser.setId(UUID.randomUUID());
-        userRepository.save(newUser);
-    }
-
-    @Override
-    public JsonWebToken signIn(String email, String password){
-        Optional<User> user = userRepository.findByEmail(email);
-        if (!user.isPresent()) {
-
-        }
-
-        User actualUser = user.get();
-        String accessToken = jwtAuthentificationHandler.createToken(actualUser.getId(), actualUser.getEmail());
-        RefreshToken refreshToken = jwtRefreshTokenHandler.createRefreshToken(actualUser);
-        refreshTokenRepository.save(refreshToken);
-        return new JsonWebToken(accessToken, refreshToken.getToken());
-
+        User user = new User(firstName, lastName, email, passwordHashed);
+        userRepository.save(user);
     }
 
     @Override

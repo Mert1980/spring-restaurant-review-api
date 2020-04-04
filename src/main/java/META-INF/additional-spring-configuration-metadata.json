@@ -1,0 +1,19 @@
+{
+    "properties": [
+        {
+            "name": "application.security.jwt.secretKey",
+            "type": "java.lang.String",
+            "description": "The key which secures the token."
+        },
+        {
+            "name": "application.security.jwt.tokenLifetime",
+            "type": "java.lang.String",
+            "description": "Valid token lifetime. Default 30 minute."
+        },
+        {
+            "name": "application.security.refreshTokenLifetime",
+            "type": "java.lang.String",
+            "description": "Valid refresh token lifetime. Default 7 days."
+        }
+    ]
+}

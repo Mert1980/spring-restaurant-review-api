@@ -12,6 +12,6 @@ public class AlreadyExistsException extends BaseException {
     }
 
     public AlreadyExistsException(String field, String value) {
-        super(code, String.format("%s: '%s' is already in use.", field, value));
+        super(code, String.format("A resource with '%s': '%s' is already in use.", field, value));
     }
 }

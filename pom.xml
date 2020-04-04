@@ -71,15 +71,19 @@
         </dependency>
 
         <dependency>
-<<<<<<< HEAD
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.10.2</version>
-=======
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>auth0-spring-security-api</artifactId>
+            <version>1.0.0-rc.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
->>>>>>> 4f9c2ab73d55369f41c8388cbfecd52feae093ee
         </dependency>
 
         <dependency>

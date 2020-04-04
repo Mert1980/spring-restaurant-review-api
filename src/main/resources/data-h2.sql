@@ -13,10 +13,11 @@ INSERT INTO restaurant VALUES('79773198E8174097B0E90683D7AF1088', FILE_READ('cla
 INSERT INTO restaurant_category VALUES('C1EB195195074939AF1426F0B82398BC', '9C411522E49B472B9C698B7D03115C6E');
 INSERT INTO restaurant_category VALUES('79773198E8174097B0E90683D7AF1088', '2D1EBC5B7D2741979CF0E84451C5BBB1');
 
-INSERT INTO user VALUES('C636AC426E4C49948217AAA660C7D826', 'admin@app.com', 'Admin', 'Administrator', 'pass', FILE_READ('classpath:profile_picture_default.png'), 'Admin');
-INSERT INTO user VALUES('4D8E971330FA4C5EA331FAD0C262B875', 'testuser1@app.com', 'Test', 'User1', 'pass', FILE_READ('classpath:profile_picture_default.png'), 'User');
-INSERT INTO user VALUES('FF8C7D5F8CFF47C5B9A2F0C8AB07CA11', 'testuser2@app.com', 'Test', 'User2', 'pass', FILE_READ('classpath:profile_picture_default.png'), 'User');
-INSERT INTO user VALUES('A290538CC3684A2686289D8ED1CB174D', 'testuser3@app.com', 'Test', 'User3', 'pass', FILE_READ('classpath:profile_picture_default.png'), 'User');
+INSERT INTO user VALUES('C636AC426E4C49948217AAA660C7D826', 'admin@app.com', 'Admin', 'Administrator', '$2a$10$Bpe5Zk4vdJzLvU2cwzmfmeLR9eAy3Xt9iOaGhHyPaCTbhsZtjm0Ee', FILE_READ('classpath:profile_picture_default.png'), 'Admin');
+INSERT INTO user VALUES('4D8E971330FA4C5EA331FAD0C262B875', 'testuser1@app.com', 'Test', 'User1', '$2a$10$Bpe5Zk4vdJzLvU2cwzmfmeLR9eAy3Xt9iOaGhHyPaCTbhsZtjm0Ee', FILE_READ('classpath:profile_picture_default.png'), 'User');
+INSERT INTO user VALUES('FF8C7D5F8CFF47C5B9A2F0C8AB07CA11', 'testuser2@app.com', 'Test', 'User2', '$2a$10$Bpe5Zk4vdJzLvU2cwzmfmeLR9eAy3Xt9iOaGhHyPaCTbhsZtjm0Ee', FILE_READ('classpath:profile_picture_default.png'), 'User');
+INSERT INTO user VALUES('A290538CC3684A2686289D8ED1CB174D', 'testuser3@app.com', 'Test', 'User3', '$2a$10$Bpe5Zk4vdJzLvU2cwzmfmeLR9eAy3Xt9iOaGhHyPaCTbhsZtjm0Ee', FILE_READ('classpath:profile_picture_default.png'), 'User');
+INSERT INTO user VALUES('9D5AA841487741C28247724C453D935F', 'meh.mihai@gmail.com', 'Ene', 'Mihai', '$2a$10$UwoqjUBG1iNhvqLz/CjF..Jb9qaieZ57CQHR4Q.l6IGEQK1A1FoYq', FILE_READ('classpath:profile_picture_default.png'), 'User');
 
 INSERT INTO ratings VALUES('C9236FD8A5CF4A828101360DC04477C7', 2, 0, 0, 0, 0, 'BathroomQuality', '79773198E8174097B0E90683D7AF1088');
 INSERT INTO ratings VALUES('D72C9D723EF04F5697BE6A607705E25A', 2, 0, 0, 0, 0, 'Staff', '79773198E8174097B0E90683D7AF1088');
