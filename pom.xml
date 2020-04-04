@@ -16,8 +16,9 @@
 
     <properties>
         <java.version>13</java.version>
-        <lombok.version>1.18.12</lombok.version>
         <mysql.version>8.0.19</mysql.version>
+        <lombok.version>1.18.12</lombok.version>
+        <modelmapper.version>2.3.7</modelmapper.version>
     </properties>
 
     <dependencies>
@@ -61,7 +62,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -71,9 +71,15 @@
         </dependency>
 
         <dependency>
+<<<<<<< HEAD
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.10.2</version>
+=======
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+>>>>>>> 4f9c2ab73d55369f41c8388cbfecd52feae093ee
         </dependency>
 
         <dependency>

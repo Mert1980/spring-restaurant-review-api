@@ -10,10 +10,10 @@ Platforma de review pentru restaurante.
 - [X] MySql connection
 - [X] Dev and prod spring profiles
 - [X] Repositories
-- [ ] Services
+- [X] Services
 - [X] Logging
 - [X] Aspect
-- [ ] Exception handling
+- [X] Exception handling
 - [ ] Pagination for restaurants and reviews
 - [ ] Unit Tests
 - [ ] Request models validation
@@ -30,3 +30,7 @@ Ene Mihai-Lucian, Radu Razvan Marian
 ```docker
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:latest
 ```
+
+## DB Schema
+
+![db-schema](https://raw.githubusercontent.com/rrady/spring-restaurant-review-api/master/db-schema.png)

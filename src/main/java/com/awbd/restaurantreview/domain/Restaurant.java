@@ -11,8 +11,8 @@ import lombok.*;
 @Entity
 @Table
 public class Restaurant extends BaseEntity {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-    private Set<Address> addresses;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
 
     @ManyToMany
     @JoinTable(name = "restaurant_category", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -22,11 +22,11 @@ public class Restaurant extends BaseEntity {
     private String name;
 
     @Lob
-    private Byte[] logo;
+    private byte[] logo;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
     private Set<Review> reviews;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-    private Set<Ratings> rating;
+    private Set<Ratings> ratings;
 }
