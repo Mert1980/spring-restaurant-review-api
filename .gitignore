@@ -33,3 +33,6 @@ build/
 
 ### logging ###
 logs/**
+
+### OS ###
+**/.DS_Store

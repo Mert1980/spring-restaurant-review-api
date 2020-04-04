@@ -13,7 +13,4 @@ public class GeographicLocation extends BaseEntity {
     private Double latitude;
 
     private Double longitude;
-
-    @OneToOne
-    private Address location;
 }

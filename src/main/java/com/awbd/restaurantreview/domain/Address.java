@@ -24,7 +24,4 @@ public class Address extends BaseEntity {
 
     @Column(length = 5, nullable = false)
     private String number;
-
-    @ManyToOne
-    private Restaurant restaurant;
 }

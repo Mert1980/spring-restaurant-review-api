@@ -1,17 +1,69 @@
 package com.awbd.restaurantreview.services;
 
-import com.awbd.restaurantreview.repositories.RestaurantRepository;
-
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.awbd.restaurantreview.domain.Restaurant;
+import com.awbd.restaurantreview.dtos.RestaurantDto;
+import com.awbd.restaurantreview.exceptions.BaseException;
+import com.awbd.restaurantreview.exceptions.NotFoundException;
+import com.awbd.restaurantreview.mappers.RestaurantMapper;
+import com.awbd.restaurantreview.repositories.RestaurantRepository;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final RestaurantMapper mapper;
+    private final RatingsService ratingsService;
 
     @Autowired
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper mapper, RatingsService ratingsService) {
         this.restaurantRepository = restaurantRepository;
+        this.mapper = mapper;
+        this.ratingsService = ratingsService;
+    }
 
+    @Override
+    public void create(RestaurantDto restaurantDto) {
+        Restaurant restaurant = mapper.mapDtoToEntity(restaurantDto);
+        ratingsService.create(restaurant);
+        restaurantRepository.save(restaurant);
+    }
+
+    @Override
+    public RestaurantDto read(UUID id) throws BaseException {
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
+        if (optionalRestaurant.isEmpty()) {
+            throw new NotFoundException(id);
+        }
+
+        RestaurantDto restaurantDto = mapper.mapEntityToDto(optionalRestaurant.get());
+        Double rating = ratingsService.calculateRatingForRestaurant(optionalRestaurant.get().getId());
+        restaurantDto.setRating(rating);
+
+        return restaurantDto;
+    }
+
+    @Override
+    public void update(RestaurantDto restaurantDto) throws BaseException {
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(restaurantDto.getId());
+        if (optionalRestaurant.isEmpty()) {
+            throw new NotFoundException(restaurantDto.getId());
+        }
+
+        Restaurant restaurant = mapper.mapDtoToEntity(restaurantDto);
+        restaurantRepository.save(restaurant);
+    }
+
+    @Override
+    public void delete(UUID id) throws BaseException {
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
+        if (optionalRestaurant.isEmpty()) {
+            throw new NotFoundException(id);
+        }
+
+        restaurantRepository.deleteById(id);
     }
 }

@@ -10,10 +10,10 @@ Platforma de review pentru restaurante.
 - [X] MySql connection
 - [X] Dev and prod spring profiles
 - [X] Repositories
-- [ ] Services
+- [X] Services
 - [X] Logging
 - [X] Aspect
-- [ ] Exception handling
+- [X] Exception handling
 - [ ] Pagination for restaurants and reviews
 - [ ] Unit Tests
 - [ ] Request models validation

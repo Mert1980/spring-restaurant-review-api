@@ -16,8 +16,9 @@
 
     <properties>
         <java.version>13</java.version>
-        <lombok.version>1.18.12</lombok.version>
         <mysql.version>8.0.19</mysql.version>
+        <lombok.version>1.18.12</lombok.version>
+        <modelmapper.version>2.3.7</modelmapper.version>
     </properties>
 
     <dependencies>
@@ -67,6 +68,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
         </dependency>
 
         <dependency>

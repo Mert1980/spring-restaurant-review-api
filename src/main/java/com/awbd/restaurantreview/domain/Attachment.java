@@ -16,7 +16,7 @@ public class Attachment extends BaseEntity {
     private AttachmentType type;
 
     @Lob
-    private Byte[] content;
+    private byte[] content;
 
     @ManyToOne
     private Review review;
