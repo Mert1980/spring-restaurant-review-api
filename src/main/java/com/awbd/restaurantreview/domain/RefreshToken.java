@@ -24,4 +24,10 @@ public class RefreshToken extends BaseEntity {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = true)
     private Date revokedAt;
+
+    public RefreshToken(User user, String token) {
+        this.user = user;
+        this.token = token;
+        this.createdAt = new Date();
+    }
 }
