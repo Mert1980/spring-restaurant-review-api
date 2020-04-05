@@ -1,4 +1,4 @@
-package com.awbd.restaurantreview.security.jwt;
+package com.awbd.restaurantreview.security;
 
 import java.util.Date;
 import java.util.UUID;

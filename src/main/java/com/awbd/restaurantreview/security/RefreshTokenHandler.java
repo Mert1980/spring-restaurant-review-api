@@ -1,4 +1,4 @@
-package com.awbd.restaurantreview.security.jwt;
+package com.awbd.restaurantreview.security;
 
 import com.awbd.restaurantreview.domain.RefreshToken;
 import com.awbd.restaurantreview.domain.User;
