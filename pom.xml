@@ -19,6 +19,8 @@
         <mysql.version>8.0.19</mysql.version>
         <lombok.version>1.18.12</lombok.version>
         <modelmapper.version>2.3.7</modelmapper.version>
+        <auth0.jwt.version>3.10.2</auth0.jwt.version>
+        <auth0.spring.version>1.0.0-rc.3</auth0.spring.version>
     </properties>
 
     <dependencies>
@@ -71,32 +73,40 @@
         </dependency>
 
         <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>3.10.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>auth0-spring-security-api</artifactId>
-            <version>1.0.0-rc.3</version>
-        </dependency>
-        <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
         </dependency>
 
         <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${auth0.jwt.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>auth0-spring-security-api</artifactId>
+            <version>${auth0.spring.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
+           <exclusions>
                 <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+             <groupId>org.junit.jupiter</groupId>
+             <artifactId>junit-jupiter-engine</artifactId>
+             <scope>test</scope>
+         </dependency>
     </dependencies>
 
     <build>

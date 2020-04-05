@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(indexes = {
-    @Index(name = "IDX_TYPE_RESTAURANT_ID", columnList = "type, restaurant_id"),
+    @Index(name = "IDX_RESTAURANTID_TYPE", columnList = "restaurant_id, type"),
     @Index(name = "IDX_RESTAURANT_ID", columnList = "restaurant_id")
 })
 public class Ratings extends BaseEntity {
