@@ -31,7 +31,7 @@ public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
     public String createRefreshToken(String email) throws BaseException {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isEmpty()) {
-            throw new NotFoundException(email);
+            throw new NotFoundException("email", email);
         }
 
         User user= optionalUser.get();
@@ -45,7 +45,7 @@ public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
     public boolean validateRefreshToken(String refreshToken) throws BaseException {
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByToken(refreshToken);
         if(optionalRefreshToken.isEmpty()) {
-            throw new NotFoundException(refreshToken);
+            throw new NotFoundException("refresh token", refreshToken);
         }
 
         RefreshToken token = optionalRefreshToken.get();

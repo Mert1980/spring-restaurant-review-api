@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 public class ChangePasswordModel {
-    @NotBlank(message = "User id field can't be empty.")
+    @NotNull(message = "User id field can't be empty.")
     private UUID userId;
 
     @NotBlank(message = "New password field can't be empty.")

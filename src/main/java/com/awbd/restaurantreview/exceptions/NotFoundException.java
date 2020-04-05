@@ -11,7 +11,7 @@ public class NotFoundException extends BaseException {
         super(code, String.format("Resource with id: '%s' was not found.", id));
     }
 
-    public NotFoundException(String resource) {
-        super(code, String.format("'%s' was not found.", resource));
+    public NotFoundException(String resource, String value) {
+        super(code, String.format("Resource with '%s': '%s' was not found.", resource, value));
     }
 }

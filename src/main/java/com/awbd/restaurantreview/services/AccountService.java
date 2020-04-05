@@ -9,7 +9,7 @@ import com.awbd.restaurantreview.models.ChangePasswordModel;
 
 public interface AccountService  {
     void create(UserRequestDto userDto) throws BaseException;
-    UserResponseDto read(UUID id) throws BaseException;
+    UserResponseDto read(String email) throws BaseException;
     void update(UserRequestDto userDto) throws BaseException;
     void delete(UUID id) throws BaseException;
     void changePassword(ChangePasswordModel changePasswordModel) throws BaseException;

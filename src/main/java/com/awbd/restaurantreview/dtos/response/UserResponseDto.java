@@ -6,6 +6,7 @@ import lombok.*;
 import com.awbd.restaurantreview.domain.RoleType;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class UserResponseDto {

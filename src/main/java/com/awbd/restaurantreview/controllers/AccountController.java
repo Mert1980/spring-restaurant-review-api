@@ -4,6 +4,8 @@ import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +23,7 @@ import com.awbd.restaurantreview.models.ChangePasswordModel;
 import com.awbd.restaurantreview.services.AccountService;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/account")
 public class AccountController {
     private AccountService accountService;
 
@@ -36,11 +38,6 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDto> read(@PathVariable("id") UUID id) throws BaseException {
-        return ResponseEntity.ok(accountService.read(id));
-    }
-
     @PutMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<?> update(@ModelAttribute @Valid UserRequestDto userDto) throws BaseException {
         accountService.update(userDto);
@@ -53,10 +50,15 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value="/changepassword")
+    @GetMapping(value = "/me")
+    @PreAuthorize("hasAuthority('Admin')")
+    public ResponseEntity<UserResponseDto> read(Authentication authentication) throws BaseException {
+        return ResponseEntity.ok(accountService.read(authentication.getName()));
+    }
+
+    @PostMapping(value="/password")
     public ResponseEntity<?> changePassword(@RequestBody @Valid ChangePasswordModel changePasswordModel) throws BaseException{
         accountService.changePassword(changePasswordModel);
         return ResponseEntity.noContent().build();
     }
-
 }

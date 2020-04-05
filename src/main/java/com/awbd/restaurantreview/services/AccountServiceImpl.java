@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
     public void create(UserRequestDto userDto) throws BaseException {
         Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
         if (optionalUser.isPresent()) {
-            throw new NotFoundException(userDto.getEmail());
+            throw new NotFoundException("email", userDto.getEmail());
         }
 
         User user = mapper.mapDtoToEntity(userDto);
@@ -53,10 +53,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UserResponseDto read(UUID id) throws BaseException {
-        Optional<User> optionalUser = userRepository.findById(id);
+    public UserResponseDto read(String email) throws BaseException {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isEmpty()) {
-            throw new NotFoundException(id);
+            throw new NotFoundException("email", email);
         }
 
         UserResponseDto userDto = mapper.mapEntityToDto(optionalUser.get());

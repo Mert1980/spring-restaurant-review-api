@@ -6,6 +6,7 @@ import lombok.*;
 import com.awbd.restaurantreview.domain.AttachmentType;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class AttachmentResponseDto {
