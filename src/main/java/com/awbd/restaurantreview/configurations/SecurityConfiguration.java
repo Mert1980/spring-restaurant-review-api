@@ -1,6 +1,5 @@
 package com.awbd.restaurantreview.configurations;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/register", "/login", "/h2-console/**").permitAll()
+            .antMatchers("/register", "/login", "/h2-console/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilter(jwtAuthenticationFilter())
