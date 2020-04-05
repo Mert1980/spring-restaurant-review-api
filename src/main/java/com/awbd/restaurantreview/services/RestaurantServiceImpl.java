@@ -4,9 +4,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.awbd.restaurantreview.domain.Restaurant;
 import com.awbd.restaurantreview.dtos.request.RestaurantRequestDto;
@@ -18,22 +22,30 @@ import com.awbd.restaurantreview.repositories.RestaurantRepository;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
+    private final Logger logger = LogManager.getLogger(this.getClass());
     private final RestaurantRepository restaurantRepository;
     private final RestaurantMapper mapper;
     private final RatingsService ratingsService;
+    private final ResourceLoader resourceLoader;
 
     @Autowired
     public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper mapper,
-            RatingsService ratingsService) {
+            RatingsService ratingsService, ResourceLoader resourceLoader) {
         this.restaurantRepository = restaurantRepository;
         this.mapper = mapper;
         this.ratingsService = ratingsService;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
     public void create(RestaurantRequestDto restaurantDto) {
         Restaurant restaurant = mapper.mapDtoToEntity(restaurantDto);
+        if (restaurant.getLogo() == null) {
+            restaurant.setLogo(defaultLogo());
+        }
+
         ratingsService.create(restaurant);
+
         restaurantRepository.save(restaurant);
     }
 
@@ -45,7 +57,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
 
         RestaurantResponseDto restaurantDto = mapper.mapEntityToDto(optionalRestaurant.get());
-        Double rating = ratingsService.calculateRatingForRestaurant(optionalRestaurant.get().getId());
+        double rating = ratingsService.calculateRatingForRestaurant(optionalRestaurant.get().getId());
         restaurantDto.setRating(rating);
 
         return restaurantDto;
@@ -59,8 +71,9 @@ public class RestaurantServiceImpl implements RestaurantService {
             @Override
             public RestaurantResponseDto apply(Restaurant t) {
                 RestaurantResponseDto dto = mapper.mapEntityToDto(t);
-                Double rating = ratingsService.calculateRatingForRestaurant(t.getId());
+                double rating = ratingsService.calculateRatingForRestaurant(t.getId());
                 dto.setRating(rating);
+
                 return dto;
             }
         });
@@ -74,6 +87,15 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
 
         Restaurant restaurant = mapper.mapDtoToEntity(restaurantDto);
+        if (restaurantDto.getLogo() != null) {
+            try {
+                restaurant.setLogo(restaurantDto.getLogo().getBytes());
+            } catch (Exception e) {
+                logger.info("Failed to update profile picture. Using default profile picture.");
+                restaurant.setLogo(defaultLogo());
+            }
+        }
+
         restaurantRepository.save(restaurant);
     }
 
@@ -85,5 +107,18 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
 
         restaurantRepository.deleteById(id);
+    }
+
+    private byte[] defaultLogo() {
+        byte[] defaultLogo = null;
+
+        try {
+            Resource resource = resourceLoader.getResource("classpath:restaurant_logo_default.png");
+            defaultLogo = resource.getInputStream().readAllBytes();
+        } catch (Exception e) {
+            logger.info(String.format("Failed to read default logo. Message: %s", e.getMessage()));
+        }
+
+        return defaultLogo;
     }
 }

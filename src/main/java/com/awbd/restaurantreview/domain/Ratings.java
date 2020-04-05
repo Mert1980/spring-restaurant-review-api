@@ -16,15 +16,15 @@ public class Ratings extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private RatingType type;
 
-    private Integer oneStarCount;
+    private int oneStarCount;
 
-    private Integer twoStarCount;
+    private int twoStarCount;
 
-    private Integer threeStarCount;
+    private int threeStarCount;
 
-    private Integer fourStarCount;
+    private int fourStarCount;
 
-    private Integer fiveStarCount;
+    private int fiveStarCount;
 
     @ManyToOne
     private Restaurant restaurant;

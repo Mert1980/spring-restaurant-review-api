@@ -9,8 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +19,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.auth0.jwt.interfaces.Claim;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.awbd.restaurantreview.models.JsonWebTokenModel;
 import com.awbd.restaurantreview.models.LoginModel;
@@ -43,29 +43,27 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req,
-                                                HttpServletResponse res) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response) throws AuthenticationException {
         try {
-            LoginModel loginModel = new ObjectMapper()
-                    .readValue(req.getInputStream(), LoginModel.class);
+            LoginModel loginModel = new ObjectMapper().readValue(request.getInputStream(), LoginModel.class);
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                         loginModel.getEmail(),
                         loginModel.getPassword(),
-                        new ArrayList<>())
-            );
+                        new ArrayList<>()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest req,
-                                            HttpServletResponse res,
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
-        User authenticatedUser = (User)auth.getPrincipal();
+                                            Authentication authentication) throws IOException, ServletException {
+        User authenticatedUser = (User)authentication.getPrincipal();
         Set<String> authorities = AuthorityUtils.authorityListToSet(authenticatedUser.getAuthorities());
         String token = jwtHandler.createToken(authenticatedUser.getUsername(), authorities);
         Long expires = null;
@@ -76,17 +74,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             String refreshToken = refreshTokenHandler.createRefreshToken(authenticatedUser.getUsername());
-            res.addCookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken));
+            response.addCookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken));
         } catch (Exception e) {
             logger.info("Could not create refresh token.");
         }
 
         JsonWebTokenModel jsonWebTokenModel = new JsonWebTokenModel(token, expires);
         String responseBody = new ObjectMapper().writeValueAsString(jsonWebTokenModel);
-        res.setStatus(HttpServletResponse.SC_OK);
-        res.setContentType("application/json");
-        res.getWriter().write(responseBody);
-        res.getWriter().flush();
-        res.getWriter().close();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
+        response.getWriter().write(responseBody);
+        response.getWriter().flush();
+        response.getWriter().close();
     }
 }

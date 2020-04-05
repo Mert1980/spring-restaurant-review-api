@@ -38,7 +38,7 @@ public class RatingsServiceImpl implements RatingsService {
     }
 
     @Override
-    public void update(UUID id, RatingType type, Integer stars) {
+    public void update(UUID id, RatingType type, int stars) {
         Ratings ratings = ratingsRepository.findByRestaurantIdAndType(id, type);
 
         switch(stars) {
@@ -53,34 +53,33 @@ public class RatingsServiceImpl implements RatingsService {
     }
 
     @Override
-    public Double calculateRatingForRestaurant(UUID restaurantId) {
+    public double calculateRatingForRestaurant(UUID restaurantId) {
         List<Ratings> ratings = ratingsRepository.findAllByRestaurantId(restaurantId);
-        Double scoreTotal = 0.0;
+        double scoreTotal = 0.0;
         for (Ratings rating : ratings) {
-            Double score = wilsonScore(rating.getOneStarCount(), rating.getTwoStarCount(),
+            double score = wilsonScore(rating.getOneStarCount(), rating.getTwoStarCount(),
                     rating.getThreeStarCount(), rating.getFourStarCount(), rating.getFiveStarCount());
             logger.debug(String.format("RatingType: '%s' WilsonScore: '%s'", rating.getType(), score));
             scoreTotal += score;
         }
-        Double result = scoreTotal / ratings.size();
+        double result = scoreTotal / ratings.size();
         logger.debug(String.format("Calculated rating is: '%s'", result));
         return result;
     }
 
-    private Double wilsonScore(Integer oneStarCount, Integer twoStarCount, Integer threeStarCount,
-            Integer fourStarCount, Integer fiveStarCount) {
+    private double wilsonScore(int oneStarCount, int twoStarCount, int threeStarCount, int fourStarCount, int fiveStarCount) {
         // Calculate the positive score.
         // Normalize the rating scale to 0.0 - 1.0, giving more weight to higher
         // ratings.
-        Double p = (oneStarCount * 0.0) + (twoStarCount * 0.25) + (threeStarCount * 0.5) + (fourStarCount * 0.75)
+        double p = (oneStarCount * 0.0) + (twoStarCount * 0.25) + (threeStarCount * 0.5) + (fourStarCount * 0.75)
                 + (fiveStarCount * 1.0);
         // Calculate the negative score.
         // Normalize the rating scale to 0.0 - 1.0, giving more weight to lower ratings.
-        Double n = (oneStarCount * 1.0) + (twoStarCount * 0.75) + (threeStarCount * 0.5) + (fourStarCount * 0.25)
+        double n = (oneStarCount * 1.0) + (twoStarCount * 0.75) + (threeStarCount * 0.5) + (fourStarCount * 0.25)
                 + (fiveStarCount * 0.0);
         // Calculate the Wilson score confidence interval for a given positive score (p)
         // and negative score (n).
-        Double wilsonScore = p + n > 0
+        double wilsonScore = p + n > 0
                 ? ((p + 1.9208) / (p + n) - 1.96 * Math.sqrt((p * n) / (p + n) + 0.9604) / (p + n))
                         / (1 + 3.8416 / (p + n))
                 : 0;

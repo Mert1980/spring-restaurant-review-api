@@ -10,7 +10,7 @@ import lombok.*;
 @Entity
 @Table
 public class GeographicLocation extends BaseEntity {
-    private Double latitude;
+    private double latitude;
 
-    private Double longitude;
+    private double longitude;
 }

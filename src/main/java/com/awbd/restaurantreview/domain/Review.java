@@ -29,17 +29,17 @@ public class Review extends BaseEntity {
     private Date createdAt;
 
     @Column(nullable = false)
-    private Integer batroomQuality;
+    private int batroomQuality;
 
     @Column(nullable = false)
-    private Integer staff;
+    private int staff;
 
     @Column(nullable = false)
-    private Integer cleanliness;
+    private int cleanliness;
 
     @Column(nullable = false)
-    private Integer driveThru;
+    private int driveThru;
 
     @Column(nullable = false)
-    private Integer deliverySpeed;
+    private int deliverySpeed;
 }

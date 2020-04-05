@@ -12,8 +12,6 @@ import com.awbd.restaurantreview.domain.AttachmentType;
 public class AttachmentRequestDto {
     private UUID id;
 
-    private String fileName;
-
     private AttachmentType type;
 
     private MultipartFile content;

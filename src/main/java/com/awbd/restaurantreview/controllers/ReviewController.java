@@ -1,6 +1,7 @@
 package com.awbd.restaurantreview.controllers;
 
 import java.util.UUID;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +29,7 @@ public class ReviewController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(@ModelAttribute ReviewRequestDto reviewDto) {
+    public ResponseEntity<?> create(@ModelAttribute @Valid ReviewRequestDto reviewDto) {
         reviewService.create(reviewDto);
         return ResponseEntity.noContent().build();
     }
@@ -39,7 +40,7 @@ public class ReviewController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> update(@ModelAttribute ReviewRequestDto reviewDto) throws BaseException {
+    public ResponseEntity<?> update(@ModelAttribute @Valid ReviewRequestDto reviewDto) throws BaseException {
         reviewService.update(reviewDto);
         return ResponseEntity.noContent().build();
     }

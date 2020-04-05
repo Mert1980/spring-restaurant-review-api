@@ -11,9 +11,9 @@ import lombok.*;
 public class ReviewResponseDto {
     private UUID id;
 
-    private UUID userId;
-
     private UUID restaurantId;
+
+    private UUID userId;
 
     private String userName;
 
@@ -21,15 +21,15 @@ public class ReviewResponseDto {
 
     private Date createdAt;
 
-    private Integer batroomQuality;
+    private int batroomQuality;
 
-    private Integer staff;
+    private int staff;
 
-    private Integer cleanliness;
+    private int cleanliness;
 
-    private Integer driveThru;
+    private int driveThru;
 
-    private Integer deliverySpeed;
+    private int deliverySpeed;
 
     private List<String> base64attachments;
 }

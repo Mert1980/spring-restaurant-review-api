@@ -16,7 +16,7 @@ public class RestaurantResponseDto {
 
     private String name;
 
-    private Double rating;
+    private double rating;
 
     private String base64logo;
 

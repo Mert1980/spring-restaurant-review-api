@@ -8,5 +8,5 @@ import lombok.*;
 public class JsonWebTokenModel {
     private String token;
 
-    private Long expires;
+    private long expires;
 }

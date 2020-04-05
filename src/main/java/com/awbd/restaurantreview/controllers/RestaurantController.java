@@ -1,6 +1,7 @@
 package com.awbd.restaurantreview.controllers;
 
 import java.util.UUID;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +33,7 @@ public class RestaurantController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(@ModelAttribute RestaurantRequestDto restaurantDto) {
+    public ResponseEntity<?> create(@ModelAttribute @Valid RestaurantRequestDto restaurantDto) {
         restaurantService.create(restaurantDto);
         return ResponseEntity.noContent().build();
     }
@@ -51,7 +52,7 @@ public class RestaurantController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> update(@ModelAttribute RestaurantRequestDto restaurantDto) throws BaseException {
+    public ResponseEntity<?> update(@ModelAttribute @Valid RestaurantRequestDto restaurantDto) throws BaseException {
         restaurantService.update(restaurantDto);
         return ResponseEntity.noContent().build();
     }

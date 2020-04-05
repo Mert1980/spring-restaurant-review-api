@@ -27,9 +27,11 @@ public class UserMapper implements Mapper<User, UserRequestDto, UserResponseDto>
     @Override
     public UserResponseDto mapEntityToDto(User entity) {
         UserResponseDto dto = mapper.map(entity, UserResponseDto.class);
+
         StringBuilder base64 = new StringBuilder(DATA_IMAGE);
         base64.append(Base64.getEncoder().encodeToString(entity.getProfilePicture()));
         dto.setBase64profilePicture(base64.toString());
+
         return dto;
     }
 }

@@ -32,8 +32,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         User user = optionalUser.get();
         Collection<? extends GrantedAuthority> authorities = Arrays.stream(new String[] { user.getType().toString() })
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+                                                                    .map(SimpleGrantedAuthority::new)
+                                                                    .collect(Collectors.toList());
+
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPasswordHash(), authorities);
     }
 }

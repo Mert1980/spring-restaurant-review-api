@@ -16,9 +16,9 @@ Platforma de review pentru restaurante.
 - [X] Exception handling
 - [ ] Pagination for restaurants and reviews
 - [ ] Unit Tests
-- [ ] Request models validation
-- [ ] Controllers
-- [ ] Security (roles: admin, restaurant agent and user) JWT
+- [X] Request models validation
+- [X] Controllers
+- [X] Security (roles: admin and user) JWT
 - [ ] Routing + secured routes
 
 ## Echipa de proiect

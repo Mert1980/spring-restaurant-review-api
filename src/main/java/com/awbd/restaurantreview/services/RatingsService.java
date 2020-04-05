@@ -7,6 +7,6 @@ import com.awbd.restaurantreview.domain.Restaurant;
 
 public interface RatingsService {
     void create(Restaurant restaurant);
-    void update(UUID id, RatingType type, Integer stars);
-    Double calculateRatingForRestaurant(UUID restaurantId);
+    void update(UUID id, RatingType type, int stars);
+    double calculateRatingForRestaurant(UUID restaurantId);
 }

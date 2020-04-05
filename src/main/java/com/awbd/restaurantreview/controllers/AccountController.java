@@ -1,6 +1,7 @@
 package com.awbd.restaurantreview.controllers;
 
 import java.util.UUID;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ public class AccountController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(@ModelAttribute UserRequestDto userDto) throws BaseException {
+    public ResponseEntity<?> create(@ModelAttribute @Valid UserRequestDto userDto) throws BaseException {
         accountService.create(userDto);
         return ResponseEntity.noContent().build();
     }
@@ -41,7 +42,7 @@ public class AccountController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> update(@ModelAttribute UserRequestDto userDto) throws BaseException {
+    public ResponseEntity<?> update(@ModelAttribute @Valid UserRequestDto userDto) throws BaseException {
         accountService.update(userDto);
         return ResponseEntity.noContent().build();
     }
@@ -53,7 +54,7 @@ public class AccountController {
     }
 
     @PostMapping(value="/changepassword")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordModel changePasswordModel) throws BaseException{
+    public ResponseEntity<?> changePassword(@RequestBody @Valid ChangePasswordModel changePasswordModel) throws BaseException{
         accountService.changePassword(changePasswordModel);
         return ResponseEntity.noContent().build();
     }
