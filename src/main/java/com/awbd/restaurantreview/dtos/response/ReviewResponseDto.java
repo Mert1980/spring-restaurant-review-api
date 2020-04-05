@@ -1,15 +1,14 @@
-package com.awbd.restaurantreview.dtos;
+package com.awbd.restaurantreview.dtos.response;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.web.multipart.MultipartFile;
 import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @Setter
-public class ReviewDto {
+public class ReviewResponseDto {
     private UUID id;
 
     private UUID userId;
@@ -31,8 +30,6 @@ public class ReviewDto {
     private Integer driveThru;
 
     private Integer deliverySpeed;
-
-    private List<MultipartFile> attachments;
 
     private List<String> base64attachments;
 }

@@ -1,4 +1,4 @@
-package com.awbd.restaurantreview.dtos;
+package com.awbd.restaurantreview.dtos.request;
 
 import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,7 +9,7 @@ import com.awbd.restaurantreview.domain.RoleType;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserDto {
+public class UserRequestDto {
     private UUID id;
 
     private String email;
@@ -23,6 +23,4 @@ public class UserDto {
     private RoleType type;
 
     private MultipartFile profilePicture;
-
-    private String base64profilePicture;
 }

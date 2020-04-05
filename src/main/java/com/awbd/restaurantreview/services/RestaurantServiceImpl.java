@@ -9,7 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.awbd.restaurantreview.domain.Restaurant;
-import com.awbd.restaurantreview.dtos.RestaurantDto;
+import com.awbd.restaurantreview.dtos.request.RestaurantRequestDto;
+import com.awbd.restaurantreview.dtos.response.RestaurantResponseDto;
 import com.awbd.restaurantreview.exceptions.BaseException;
 import com.awbd.restaurantreview.exceptions.NotFoundException;
 import com.awbd.restaurantreview.mappers.RestaurantMapper;
@@ -30,20 +31,20 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void create(RestaurantDto restaurantDto) {
+    public void create(RestaurantRequestDto restaurantDto) {
         Restaurant restaurant = mapper.mapDtoToEntity(restaurantDto);
         ratingsService.create(restaurant);
         restaurantRepository.save(restaurant);
     }
 
     @Override
-    public RestaurantDto read(UUID id) throws BaseException {
+    public RestaurantResponseDto read(UUID id) throws BaseException {
         Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(id);
         if (optionalRestaurant.isEmpty()) {
             throw new NotFoundException(id);
         }
 
-        RestaurantDto restaurantDto = mapper.mapEntityToDto(optionalRestaurant.get());
+        RestaurantResponseDto restaurantDto = mapper.mapEntityToDto(optionalRestaurant.get());
         Double rating = ratingsService.calculateRatingForRestaurant(optionalRestaurant.get().getId());
         restaurantDto.setRating(rating);
 
@@ -51,13 +52,13 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Page<RestaurantDto> read(Pageable pageable) throws BaseException {
+    public Page<RestaurantResponseDto> read(Pageable pageable) throws BaseException {
         Page<Restaurant> restaurantsPage = restaurantRepository.findAll(pageable);
 
-        return restaurantsPage.map(new Function<Restaurant, RestaurantDto>() {
+        return restaurantsPage.map(new Function<Restaurant, RestaurantResponseDto>() {
             @Override
-            public RestaurantDto apply(Restaurant t) {
-                RestaurantDto dto = mapper.mapEntityToDto(t);
+            public RestaurantResponseDto apply(Restaurant t) {
+                RestaurantResponseDto dto = mapper.mapEntityToDto(t);
                 Double rating = ratingsService.calculateRatingForRestaurant(t.getId());
                 dto.setRating(rating);
                 return dto;
@@ -66,7 +67,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void update(RestaurantDto restaurantDto) throws BaseException {
+    public void update(RestaurantRequestDto restaurantDto) throws BaseException {
         Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(restaurantDto.getId());
         if (optionalRestaurant.isEmpty()) {
             throw new NotFoundException(restaurantDto.getId());

@@ -1,7 +1,6 @@
 package com.awbd.restaurantreview.controllers;
 
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.awbd.restaurantreview.dtos.ReviewDto;
+import com.awbd.restaurantreview.dtos.request.ReviewRequestDto;
+import com.awbd.restaurantreview.dtos.response.ReviewResponseDto;
 import com.awbd.restaurantreview.exceptions.BaseException;
 import com.awbd.restaurantreview.services.ReviewService;
 
@@ -28,18 +28,18 @@ public class ReviewController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(@ModelAttribute ReviewDto reviewDto) {
+    public ResponseEntity<?> create(@ModelAttribute ReviewRequestDto reviewDto) {
         reviewService.create(reviewDto);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ReviewDto> read(@PathVariable("id") UUID id) throws BaseException {
+    public ResponseEntity<ReviewResponseDto> read(@PathVariable("id") UUID id) throws BaseException {
         return ResponseEntity.ok(reviewService.read(id));
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> update(@ModelAttribute ReviewDto reviewDto) throws BaseException {
+    public ResponseEntity<?> update(@ModelAttribute ReviewRequestDto reviewDto) throws BaseException {
         reviewService.update(reviewDto);
         return ResponseEntity.noContent().build();
     }

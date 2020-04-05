@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.awbd.restaurantreview.dtos.RestaurantDto;
+import com.awbd.restaurantreview.dtos.request.RestaurantRequestDto;
+import com.awbd.restaurantreview.dtos.response.RestaurantResponseDto;
 import com.awbd.restaurantreview.exceptions.BaseException;
 import com.awbd.restaurantreview.services.RestaurantService;
 
@@ -31,26 +32,26 @@ public class RestaurantController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(@ModelAttribute RestaurantDto restaurantDto) {
+    public ResponseEntity<?> create(@ModelAttribute RestaurantRequestDto restaurantDto) {
         restaurantService.create(restaurantDto);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<RestaurantDto> read(@PathVariable("id") UUID id) throws BaseException {
+    public ResponseEntity<RestaurantResponseDto> read(@PathVariable("id") UUID id) throws BaseException {
         return ResponseEntity.ok(restaurantService.read(id));
     }
 
     @GetMapping
-    public ResponseEntity<Page<RestaurantDto>> read(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                    @RequestParam(name = "size", defaultValue = "10") int size,
-                                                    @RequestParam(name = "sort", defaultValue = "ASC") String sort,
-                                                    @RequestParam(name = "sortedParam", defaultValue = "name") String sortedParam) throws BaseException {
+    public ResponseEntity<Page<RestaurantResponseDto>> read(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                            @RequestParam(name = "size", defaultValue = "10") int size,
+                                                            @RequestParam(name = "sort", defaultValue = "ASC") String sort,
+                                                            @RequestParam(name = "sortedParam", defaultValue = "name") String sortedParam) throws BaseException {
         return ResponseEntity.ok(restaurantService.read(PageRequest.of(page, size, Sort.Direction.valueOf(sort), sortedParam)));
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> update(@ModelAttribute RestaurantDto restaurantDto) throws BaseException {
+    public ResponseEntity<?> update(@ModelAttribute RestaurantRequestDto restaurantDto) throws BaseException {
         restaurantService.update(restaurantDto);
         return ResponseEntity.noContent().build();
     }

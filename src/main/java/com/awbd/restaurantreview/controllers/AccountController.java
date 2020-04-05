@@ -1,5 +1,6 @@
 package com.awbd.restaurantreview.controllers;
 
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,19 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.awbd.restaurantreview.services.AccountService;
-
-import java.util.UUID;
-
-import com.awbd.restaurantreview.dtos.UserDto;
+import com.awbd.restaurantreview.dtos.request.UserRequestDto;
+import com.awbd.restaurantreview.dtos.response.UserResponseDto;
 import com.awbd.restaurantreview.exceptions.BaseException;
 import com.awbd.restaurantreview.models.ChangePasswordModel;
-
-import org.springframework.web.bind.annotation.RequestBody;
-
+import com.awbd.restaurantreview.services.AccountService;
 
 @RestController
 @RequestMapping("/account")
@@ -33,18 +30,18 @@ public class AccountController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(@ModelAttribute UserDto userDto) throws BaseException {
+    public ResponseEntity<?> create(@ModelAttribute UserRequestDto userDto) throws BaseException {
         accountService.create(userDto);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserDto> read(@PathVariable("id") UUID id) throws BaseException {
+    public ResponseEntity<UserResponseDto> read(@PathVariable("id") UUID id) throws BaseException {
         return ResponseEntity.ok(accountService.read(id));
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> update(@ModelAttribute UserDto userDto) throws BaseException {
+    public ResponseEntity<?> update(@ModelAttribute UserRequestDto userDto) throws BaseException {
         accountService.update(userDto);
         return ResponseEntity.noContent().build();
     }

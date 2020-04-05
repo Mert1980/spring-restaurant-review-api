@@ -1,7 +1,6 @@
-package com.awbd.restaurantreview.dtos;
+package com.awbd.restaurantreview.dtos.response;
 
 import java.util.UUID;
-import org.springframework.web.multipart.MultipartFile;
 import lombok.*;
 
 import com.awbd.restaurantreview.domain.AttachmentType;
@@ -9,14 +8,12 @@ import com.awbd.restaurantreview.domain.AttachmentType;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AttachmentDto {
+public class AttachmentResponseDto {
     private UUID id;
 
     private String fileName;
 
     private AttachmentType type;
-
-    private MultipartFile content;
 
     private String base64content;
 }

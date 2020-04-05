@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.awbd.restaurantreview.domain.RatingType;
 import com.awbd.restaurantreview.domain.Review;
-import com.awbd.restaurantreview.dtos.ReviewDto;
+import com.awbd.restaurantreview.dtos.request.ReviewRequestDto;
+import com.awbd.restaurantreview.dtos.response.ReviewResponseDto;
 import com.awbd.restaurantreview.exceptions.BaseException;
 import com.awbd.restaurantreview.exceptions.NotFoundException;
 import com.awbd.restaurantreview.mappers.ReviewMapper;
@@ -29,7 +30,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Transactional
     @Override
-    public void create(ReviewDto reviewDto) {
+    public void create(ReviewRequestDto reviewDto) {
         Review review = mapper.mapDtoToEntity(reviewDto);
 
         ratingsService.update(reviewDto.getRestaurantId(), RatingType.BathroomQuality, reviewDto.getBatroomQuality());
@@ -42,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto read(UUID id) throws BaseException {
+    public ReviewResponseDto read(UUID id) throws BaseException {
         Optional<Review> optionalReview = reviewRepository.findById(id);
         if (optionalReview.isEmpty()) {
             throw new NotFoundException(id);
@@ -52,7 +53,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void update(ReviewDto reviewDto) throws BaseException {
+    public void update(ReviewRequestDto reviewDto) throws BaseException {
         Optional<Review> optionalReview = reviewRepository.findById(reviewDto.getId());
         if (optionalReview.isEmpty()) {
             throw new NotFoundException(reviewDto.getId());

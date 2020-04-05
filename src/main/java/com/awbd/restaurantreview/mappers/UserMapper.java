@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 import org.modelmapper.ModelMapper;
 
 import com.awbd.restaurantreview.domain.User;
-import com.awbd.restaurantreview.dtos.UserDto;
+import com.awbd.restaurantreview.dtos.request.UserRequestDto;
+import com.awbd.restaurantreview.dtos.response.UserResponseDto;
 
 @Component
-public class UserMapper implements DomainMapper<User, UserDto> {
+public class UserMapper implements Mapper<User, UserRequestDto, UserResponseDto> {
     private final ModelMapper mapper;
 
     @Autowired
@@ -18,17 +19,17 @@ public class UserMapper implements DomainMapper<User, UserDto> {
     }
 
     @Override
-    public UserDto mapEntityToDto(User entity) {
-        UserDto dto = mapper.map(entity, UserDto.class);
-        StringBuilder base64 = new StringBuilder("data:image/png;base64,");
-        base64.append(Base64.getEncoder().encodeToString(entity.getProfilePicture()));
-        dto.setBase64profilePicture(base64.toString());
-        return dto;
+    public User mapDtoToEntity(UserRequestDto dto) {
+        User user = mapper.map(dto, User.class);
+        return user;
     }
 
     @Override
-    public User mapDtoToEntity(UserDto dto) {
-        User user = mapper.map(dto, User.class);
-        return user;
+    public UserResponseDto mapEntityToDto(User entity) {
+        UserResponseDto dto = mapper.map(entity, UserResponseDto.class);
+        StringBuilder base64 = new StringBuilder(DATA_IMAGE);
+        base64.append(Base64.getEncoder().encodeToString(entity.getProfilePicture()));
+        dto.setBase64profilePicture(base64.toString());
+        return dto;
     }
 }

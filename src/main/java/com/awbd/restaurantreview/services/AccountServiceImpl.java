@@ -11,7 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.awbd.restaurantreview.domain.User;
-import com.awbd.restaurantreview.dtos.UserDto;
+import com.awbd.restaurantreview.dtos.request.UserRequestDto;
+import com.awbd.restaurantreview.dtos.response.UserResponseDto;
 import com.awbd.restaurantreview.exceptions.BaseException;
 import com.awbd.restaurantreview.exceptions.InvalidInputException;
 import com.awbd.restaurantreview.exceptions.NotFoundException;
@@ -36,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void create(UserDto userDto) throws BaseException {
+    public void create(UserRequestDto userDto) throws BaseException {
         Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
         if (optionalUser.isPresent()) {
             throw new NotFoundException(userDto.getEmail());
@@ -52,18 +53,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UserDto read(UUID id) throws BaseException {
+    public UserResponseDto read(UUID id) throws BaseException {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new NotFoundException(id);
         }
 
-        UserDto userDto = mapper.mapEntityToDto(optionalUser.get());
+        UserResponseDto userDto = mapper.mapEntityToDto(optionalUser.get());
         return userDto;
     }
 
     @Override
-    public void update(UserDto userDto) throws BaseException {
+    public void update(UserRequestDto userDto) throws BaseException {
         Optional<User> optionalUser = userRepository.findById(userDto.getId());
         if (optionalUser.isEmpty()) {
             throw new NotFoundException(userDto.getId());
