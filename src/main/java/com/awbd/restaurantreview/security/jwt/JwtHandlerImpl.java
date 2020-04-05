@@ -44,7 +44,7 @@ public class JwtHandlerImpl implements JwtHandler {
 
             return new HashMap<String, Object>(claims);
         } catch (Exception e) {
-            logger.info("Failed to parse token.");
+            logger.info(String.format("Failed to parse token. Message: %s", e.getMessage()));
         }
 
         return null;

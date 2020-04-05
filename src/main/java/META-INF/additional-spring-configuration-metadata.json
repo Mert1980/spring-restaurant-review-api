@@ -7,13 +7,13 @@
         },
         {
             "name": "application.security.jwt.tokenLifetime",
-            "type": "java.lang.String",
-            "description": "Valid token lifetime. Default 30 minute."
+            "type": "java.lang.Long",
+            "description": "Valid token lifetime."
         },
         {
             "name": "application.security.refreshTokenLifetime",
-            "type": "java.lang.String",
-            "description": "Valid refresh token lifetime. Default 7 days."
+            "type": "java.lang.Long",
+            "description": "Valid refresh token lifetime."
         }
     ]
 }

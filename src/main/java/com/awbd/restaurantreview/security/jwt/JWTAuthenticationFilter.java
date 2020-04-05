@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.awbd.restaurantreview.models.SignIn;
+import com.awbd.restaurantreview.models.LoginModel;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private static final String LOGIN_ENDPOINT = "/login";
@@ -37,13 +37,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) throws AuthenticationException {
         try {
-            SignIn signInModel = new ObjectMapper()
-                    .readValue(req.getInputStream(), SignIn.class);
+            LoginModel loginModel = new ObjectMapper()
+                    .readValue(req.getInputStream(), LoginModel.class);
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                        signInModel.getEmail(),
-                        signInModel.getPassword(),
+                        loginModel.getEmail(),
+                        loginModel.getPassword(),
                         new ArrayList<>())
             );
         } catch (IOException e) {
@@ -59,6 +59,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         User authenticatedUser = (User)auth.getPrincipal();
         Set<String> authorities = AuthorityUtils.authorityListToSet(authenticatedUser.getAuthorities());
         String token = jwtHandler.createToken(authenticatedUser.getUsername(), authorities);
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token); // TODO: generate a refresh token + write access token on res body, set refresh token in a cookie
     }
 }

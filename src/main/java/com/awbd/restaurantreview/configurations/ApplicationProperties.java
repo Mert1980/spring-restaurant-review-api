@@ -5,22 +5,22 @@ import org.springframework.context.annotation.Configuration;
 import lombok.*;
 
 @Configuration
-@ConfigurationProperties(prefix = "application")
+@ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 @Getter
 @Setter
 public class ApplicationProperties {
-    private Security security;
+    private final Security security = new Security();
 
     @Getter
     @Setter
-    public class Security {
-        private Jwt jwt;
+    public static class Security {
+        private final Jwt jwt = new Jwt();
 
         private Long refreshTokenLifetime;
 
         @Getter
         @Setter
-        public class Jwt {
+        public static class Jwt {
             private String secretKey;
 
             private Long tokenLifetime;

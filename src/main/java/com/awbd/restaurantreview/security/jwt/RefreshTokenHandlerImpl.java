@@ -2,6 +2,7 @@ package com.awbd.restaurantreview.security.jwt;
 
 import java.util.Date;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.awbd.restaurantreview.configurations.ApplicationProperties;
@@ -12,6 +13,7 @@ import com.awbd.restaurantreview.domain.User;
 public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
     private final ApplicationProperties applicationProperties;
 
+    @Autowired
     public RefreshTokenHandlerImpl(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }

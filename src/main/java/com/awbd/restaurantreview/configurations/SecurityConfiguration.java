@@ -1,6 +1,7 @@
 package com.awbd.restaurantreview.configurations;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -19,18 +21,17 @@ import com.awbd.restaurantreview.security.UserDetailsServiceImpl;
 import com.awbd.restaurantreview.security.jwt.JwtAuthenticationFilter;
 import com.awbd.restaurantreview.security.jwt.JwtAuthorizationFilter;
 import com.awbd.restaurantreview.security.jwt.JwtHandler;
-import com.awbd.restaurantreview.security.jwt.JwtHandlerImpl;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
-    private final ApplicationProperties applicationProperties;
+    private final JwtHandler jwtHandler;
 
     @Autowired
-    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, ApplicationProperties applicationProperties) {
+    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, JwtHandler jwtHandler) {
         this.userDetailsService = userDetailsService;
-        this.applicationProperties = applicationProperties;
+        this.jwtHandler = jwtHandler;
     }
 
     @Override
@@ -41,13 +42,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.cors().disable();
 
+        http.exceptionHandling()
+            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/auth/sign-up", "/h2-console/**", "/login").permitAll()
+            .antMatchers(HttpMethod.POST, "/register", "/login", "/h2-console/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilter(jwtAuthenticationFilter())
-            .addFilter(jwtAuthorizationFilter())
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .addFilter(jwtAuthorizationFilter());
     }
 
     @Override
@@ -74,10 +80,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        return new JwtAuthenticationFilter(authenticationManager(), new JwtHandlerImpl(applicationProperties));
+        return new JwtAuthenticationFilter(authenticationManager(), jwtHandler);
     }
 
     private JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
-        return new JwtAuthorizationFilter(authenticationManager(), new JwtHandlerImpl(applicationProperties));
+        return new JwtAuthorizationFilter(authenticationManager(), jwtHandler);
     }
 }

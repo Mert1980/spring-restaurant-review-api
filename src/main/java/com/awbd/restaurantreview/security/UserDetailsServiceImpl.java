@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.Arrays;
 import java.util.Collection;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +19,7 @@ import com.awbd.restaurantreview.repositories.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
+    @Autowired
     public UserDetailsServiceImpl(UserRepository UserRepository) {
         this.userRepository = UserRepository;
     }

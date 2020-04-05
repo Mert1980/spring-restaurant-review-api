@@ -35,11 +35,4 @@ public class User extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Review> reviews;
-
-    public User(String firstName, String lastName, String email, String passwordHash) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.passwordHash = passwordHash;
-    }
 }
