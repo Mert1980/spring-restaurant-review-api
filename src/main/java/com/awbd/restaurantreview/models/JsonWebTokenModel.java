@@ -2,12 +2,11 @@ package com.awbd.restaurantreview.models;
 
 import lombok.*;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class LoginModel {
-    private String email;
+public class JsonWebTokenModel {
+    private String token;
 
-    private String password;
+    private Long expires;
 }

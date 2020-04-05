@@ -8,7 +8,10 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table
+@Table(indexes = {
+    @Index(name = "IDX_TYPE_RESTAURANT_ID", columnList = "type, restaurant_id"),
+    @Index(name = "IDX_RESTAURANT_ID", columnList = "restaurant_id")
+})
 public class Ratings extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private RatingType type;

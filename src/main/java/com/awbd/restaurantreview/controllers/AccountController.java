@@ -17,6 +17,10 @@ import java.util.UUID;
 
 import com.awbd.restaurantreview.dtos.UserDto;
 import com.awbd.restaurantreview.exceptions.BaseException;
+import com.awbd.restaurantreview.models.ChangePasswordModel;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/account")
@@ -50,4 +54,11 @@ public class AccountController {
         accountService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping(value="/changepassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordModel changePasswordModel) throws BaseException{
+        accountService.changePassword(changePasswordModel);
+        return ResponseEntity.noContent().build();
+    }
+
 }

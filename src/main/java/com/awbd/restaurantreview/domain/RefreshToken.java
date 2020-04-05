@@ -9,7 +9,9 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table
+@Table(indexes = {
+    @Index(name = "IDX_TOKEN", columnList = "token")
+})
 public class RefreshToken extends BaseEntity {
     @ManyToOne
     private User user;

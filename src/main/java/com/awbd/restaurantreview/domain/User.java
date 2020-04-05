@@ -9,7 +9,9 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table
+@Table(indexes = {
+    @Index(name = "IDX_EMAIL", columnList = "email")
+})
 public class User extends BaseEntity {
 
     @Column(length = 25, nullable = false, unique = true)
