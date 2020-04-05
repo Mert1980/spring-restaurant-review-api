@@ -2,7 +2,10 @@ package com.awbd.restaurantreview.services;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.awbd.restaurantreview.domain.Restaurant;
@@ -19,7 +22,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RatingsService ratingsService;
 
     @Autowired
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper mapper, RatingsService ratingsService) {
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper mapper,
+            RatingsService ratingsService) {
         this.restaurantRepository = restaurantRepository;
         this.mapper = mapper;
         this.ratingsService = ratingsService;
@@ -44,6 +48,21 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantDto.setRating(rating);
 
         return restaurantDto;
+    }
+
+    @Override
+    public Page<RestaurantDto> read(Pageable pageable) throws BaseException {
+        Page<Restaurant> restaurantsPage = restaurantRepository.findAll(pageable);
+
+        return restaurantsPage.map(new Function<Restaurant, RestaurantDto>() {
+            @Override
+            public RestaurantDto apply(Restaurant t) {
+                RestaurantDto dto = mapper.mapEntityToDto(t);
+                Double rating = ratingsService.calculateRatingForRestaurant(t.getId());
+                dto.setRating(rating);
+                return dto;
+            }
+        });
     }
 
     @Override
