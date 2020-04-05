@@ -1,12 +1,17 @@
 package com.awbd.restaurantreview.security.jwt;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,20 +21,24 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.auth0.jwt.interfaces.Claim;
+import com.awbd.restaurantreview.models.JsonWebTokenModel;
 import com.awbd.restaurantreview.models.LoginModel;
+import com.awbd.restaurantreview.security.RefreshTokenHandler;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    private final Logger logger = LogManager.getLogger(this.getClass());
     private static final String LOGIN_ENDPOINT = "/login";
-    private static final String HEADER_STRING = "Authorization";
-    private static final String TOKEN_PREFIX = "Bearer ";
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh-token";
     private final AuthenticationManager authenticationManager;
     private final JwtHandler jwtHandler;
+    private final RefreshTokenHandler refreshTokenHandler;
 
     @Autowired
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtHandler jwtHandler) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtHandler jwtHandler, RefreshTokenHandler refreshTokenHandler) {
         this.authenticationManager = authenticationManager;
         this.jwtHandler = jwtHandler;
+        this.refreshTokenHandler = refreshTokenHandler;
         setFilterProcessesUrl(LOGIN_ENDPOINT);
     }
 
@@ -59,6 +68,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         User authenticatedUser = (User)auth.getPrincipal();
         Set<String> authorities = AuthorityUtils.authorityListToSet(authenticatedUser.getAuthorities());
         String token = jwtHandler.createToken(authenticatedUser.getUsername(), authorities);
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token); // TODO: generate a refresh token + write access token on res body, set refresh token in a cookie
+        Long expires = null;
+        Map<String,Object>  tokenPayload = jwtHandler.parseToken(token);
+        if(tokenPayload != null) {
+            expires = ((Claim)tokenPayload.get("exp")).asLong();
+        }
+        try {
+            String refreshToken = refreshTokenHandler.createRefreshToken(authenticatedUser.getUsername());
+            res.addCookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken));
+        } catch (Exception e) {
+            logger.info("Could not create refresh token.");
+        }
+        JsonWebTokenModel jsonWebTokenModel = new JsonWebTokenModel(token, expires);
+        String responseBody = new ObjectMapper().writeValueAsString(jsonWebTokenModel);
+        res.setStatus(HttpServletResponse.SC_OK);
+        res.setContentType("application/json");
+        res.getWriter().write(responseBody);
+        res.getWriter().flush();
+        res.getWriter().close();
     }
 }

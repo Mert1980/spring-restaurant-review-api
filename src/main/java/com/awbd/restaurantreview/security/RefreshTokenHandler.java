@@ -1,9 +1,8 @@
 package com.awbd.restaurantreview.security;
 
-import com.awbd.restaurantreview.domain.RefreshToken;
-import com.awbd.restaurantreview.domain.User;
+import com.awbd.restaurantreview.exceptions.BaseException;
 
 public interface RefreshTokenHandler {
-    RefreshToken createRefreshToken(User user);
-    boolean validateRefreshToken(RefreshToken refreshToken);
+    String createRefreshToken(String email) throws BaseException;
+    boolean validateRefreshToken(String refreshToken) throws BaseException;
 }

@@ -11,5 +11,5 @@ public interface AccountService  {
     UserDto read(UUID id) throws BaseException;
     void update(UserDto userDto) throws BaseException;
     void delete(UUID id) throws BaseException;
-    void changePassword(ChangePasswordModel changePasswordModel);
+    void changePassword(ChangePasswordModel changePasswordModel) throws BaseException;
 }

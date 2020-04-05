@@ -47,8 +47,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             Map<String, Object> tokenPayload = jwtHandler.parseToken(token.replace(TOKEN_PREFIX, ""));
             if (tokenPayload != null) {
-                String email = tokenPayload.get("email").toString();
-                return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
+                String subject = tokenPayload.get("sub").toString();
+                return new UsernamePasswordAuthenticationToken(subject, null, new ArrayList<>());
             }
 
             return null;
