@@ -64,6 +64,10 @@ public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
         }
 
         RefreshToken token = optionalRefreshToken.get();
+        if(token.getRevokedAt() != null) {
+            return false;
+        }
+
         Date tokenExpireDate = new Date(token.getCreatedAt().getTime() + applicationProperties.getSecurity().getRefreshTokenLifetime());
         if (new Date().before(tokenExpireDate)) {
             return true;
@@ -106,7 +110,7 @@ public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
     @Override
     public void revoke(UUID userId, String refreshToken) throws BaseException {
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByToken(refreshToken);
-        if (optionalRefreshToken.isEmpty() || optionalRefreshToken.get().getUser().getId() != userId) {
+        if (optionalRefreshToken.isEmpty() || !optionalRefreshToken.get().getUser().getId().equals(userId)) {
             throw new NotFoundException("refresh token", refreshToken);
         }
 
