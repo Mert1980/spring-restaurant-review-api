@@ -4,6 +4,6 @@ import java.util.Map;
 import java.util.Set;
 
 public interface JwtHandler {
-    String createToken(String email, Set<String> authorities);
-    Map<String, Object> parseToken(String token);
+    String create(String email, Set<String> authorities);
+    Map<String, Object> parse(String token);
 }

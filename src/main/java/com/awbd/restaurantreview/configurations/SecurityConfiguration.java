@@ -1,5 +1,6 @@
 package com.awbd.restaurantreview.configurations;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.awbd.restaurantreview.security.CookieHandler;
 import com.awbd.restaurantreview.security.RefreshTokenHandler;
 import com.awbd.restaurantreview.security.UserDetailsServiceImpl;
 import com.awbd.restaurantreview.security.jwt.JwtAuthenticationFilter;
@@ -30,12 +32,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtHandler jwtHandler;
     private final RefreshTokenHandler refreshTokenHandler;
+    private final CookieHandler cookieHandler;
 
     @Autowired
-    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, JwtHandler jwtHandler, RefreshTokenHandler refreshTokenHandler){
+    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService, JwtHandler jwtHandler,
+                                RefreshTokenHandler refreshTokenHandler, CookieHandler cookieHandler) {
         this.userDetailsService = userDetailsService;
         this.jwtHandler = jwtHandler;
         this.refreshTokenHandler = refreshTokenHandler;
+        this.cookieHandler = cookieHandler;
     }
 
     @Override
@@ -53,8 +58,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-            .antMatchers("/account", "/login", "/h2-console/**").permitAll()
-            .anyRequest().authenticated()
+            .antMatchers("/h2-console/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/account", "/login").permitAll()
             .and()
             .addFilter(jwtAuthenticationFilter())
             .addFilter(jwtAuthorizationFilter());
@@ -84,7 +89,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        return new JwtAuthenticationFilter(authenticationManager(), jwtHandler, refreshTokenHandler);
+        return new JwtAuthenticationFilter(authenticationManager(), jwtHandler, refreshTokenHandler, cookieHandler);
     }
 
     private JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {

@@ -50,7 +50,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            Map<String, Object> tokenPayload = jwtHandler.parseToken(token.replace(TOKEN_PREFIX, ""));
+            Map<String, Object> tokenPayload = jwtHandler.parse(token.replace(TOKEN_PREFIX, ""));
             if (tokenPayload != null) {
                 String subject = ((Claim)tokenPayload.get("sub")).asString();
                 Collection<? extends GrantedAuthority> authorities = Arrays.stream((((Claim)tokenPayload.get("roles")).asArray(String.class)))

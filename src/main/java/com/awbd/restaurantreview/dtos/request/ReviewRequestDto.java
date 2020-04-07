@@ -15,7 +15,6 @@ public class ReviewRequestDto {
     @NotNull(message = "User id can't be empty.")
     private UUID userId;
 
-    @NotNull(message = "Restaurant id can't be empty.")
     private UUID restaurantId;
 
     @NotBlank(message = "Text field can't be empty.")

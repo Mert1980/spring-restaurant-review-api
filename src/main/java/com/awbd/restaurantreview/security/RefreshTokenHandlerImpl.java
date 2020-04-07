@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -43,7 +42,7 @@ public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
     }
 
     @Override
-    public String createRefreshToken(String email) throws BaseException {
+    public String create(String email) throws BaseException {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isEmpty()) {
             throw new NotFoundException("email", email);
@@ -57,7 +56,7 @@ public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
     }
 
     @Override
-    public boolean validateRefreshToken(String refreshToken) throws BaseException {
+    public boolean validate(String refreshToken) throws BaseException {
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByToken(refreshToken);
         if(optionalRefreshToken.isEmpty()) {
             throw new NotFoundException("refresh token", refreshToken);
@@ -89,13 +88,13 @@ public class RefreshTokenHandlerImpl implements RefreshTokenHandler {
                                                                    .map(SimpleGrantedAuthority::new)
                                                                    .collect(Collectors.toList());
         Set<String> authorities = AuthorityUtils.authorityListToSet(authoritiesCollection);
-        String accessToken = jwtHandler.createToken(user.getEmail(), authorities);
+        String accessToken = jwtHandler.create(user.getEmail(), authorities);
 
         revoke(user.getId(), token.getToken());
-        String newRefreshToken = createRefreshToken(user.getEmail());
+        String newRefreshToken = create(user.getEmail());
 
         Long expires = null;
-        Map<String,Object>  tokenPayload = jwtHandler.parseToken(accessToken);
+        Map<String,Object>  tokenPayload = jwtHandler.parse(accessToken);
         if(tokenPayload != null) {
             expires = ((Claim)tokenPayload.get("exp")).asLong();
         }

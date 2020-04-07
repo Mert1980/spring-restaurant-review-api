@@ -26,7 +26,7 @@ public class JwtHandlerImpl implements JwtHandler {
     }
 
     @Override
-    public String createToken(String email, Set<String> authorities) {
+    public String create(String email, Set<String> authorities) {
         return JWT.create()
             .withSubject(email)
             .withClaim("roles", new ArrayList<String>(authorities))
@@ -35,7 +35,7 @@ public class JwtHandlerImpl implements JwtHandler {
     }
 
     @Override
-    public Map<String, Object> parseToken(String token) {
+    public Map<String, Object> parse(String token) {
         try {
             Map<String, Claim> claims = JWT.require(HMAC512(applicationProperties.getSecurity().getJwt().getSecretKey().getBytes()))
                     .build()

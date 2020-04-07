@@ -2,25 +2,6 @@
 
 Platforma de review pentru restaurante.
 
-## ToDos
-
-- [X] Ratings table + entity
-- [X] Columns constraints
-- [X] In-memory db H2
-- [X] MySql connection
-- [X] Dev and prod spring profiles
-- [X] Repositories
-- [X] Services
-- [X] Logging
-- [X] Aspect
-- [X] Exception handling
-- [ ] Pagination for restaurants and reviews
-- [ ] Unit Tests
-- [X] Request models validation
-- [X] Controllers
-- [X] Security (roles: admin and user) JWT
-- [ ] Routing + secured routes
-
 ## Echipa de proiect
 
 Ene Mihai-Lucian, Radu Razvan Marian

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +24,7 @@ import com.awbd.restaurantreview.exceptions.BaseException;
 import com.awbd.restaurantreview.services.ReviewService;
 
 @RestController
-@RequestMapping(value = "/api/review")
+@RequestMapping(value = "/api/restaurant/{restaurantId}/review")
 public class ReviewController {
     private final ReviewService reviewService;
 
@@ -33,12 +34,16 @@ public class ReviewController {
     }
 
     @PostMapping(consumes = { "multipart/form-data" })
-    public ResponseEntity<?> create(@ModelAttribute @Valid ReviewRequestDto reviewDto) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> create(@PathVariable(value = "restaurantId") UUID restaurantId, @ModelAttribute @Valid ReviewRequestDto reviewDto) {
+        reviewDto.setRestaurantId(restaurantId);
         reviewService.create(reviewDto);
+
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Page<ReviewResponseDto>> read(@RequestParam(name = "page", defaultValue = "0") int page,
                                                         @RequestParam(name = "size", defaultValue = "10") int size,
                                                         @RequestParam(name = "sort", defaultValue = "DESC") String sort,
@@ -47,12 +52,16 @@ public class ReviewController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> update(@ModelAttribute @Valid ReviewRequestDto reviewDto) throws BaseException {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> update(@PathVariable(value = "restaurantId") UUID restaurantId, @ModelAttribute @Valid ReviewRequestDto reviewDto) throws BaseException {
+        reviewDto.setRestaurantId(restaurantId);
         reviewService.update(reviewDto);
+
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<?> delete(@PathVariable("id") UUID id) throws BaseException {
         reviewService.delete(id);
         return ResponseEntity.noContent().build();

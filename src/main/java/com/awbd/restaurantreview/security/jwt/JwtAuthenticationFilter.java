@@ -6,7 +6,6 @@ import java.util.Set;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +23,24 @@ import org.apache.logging.log4j.Logger;
 
 import com.awbd.restaurantreview.models.JsonWebTokenModel;
 import com.awbd.restaurantreview.models.LoginModel;
+import com.awbd.restaurantreview.security.CookieHandler;
 import com.awbd.restaurantreview.security.RefreshTokenHandler;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final Logger logger = LogManager.getLogger(this.getClass());
     private static final String LOGIN_ENDPOINT = "/login";
-    private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh-token";
     private final AuthenticationManager authenticationManager;
     private final JwtHandler jwtHandler;
     private final RefreshTokenHandler refreshTokenHandler;
+    private final CookieHandler cookieHandler;
 
     @Autowired
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtHandler jwtHandler, RefreshTokenHandler refreshTokenHandler) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtHandler jwtHandler,
+                                    RefreshTokenHandler refreshTokenHandler, CookieHandler cookieHandler) {
         this.authenticationManager = authenticationManager;
         this.jwtHandler = jwtHandler;
         this.refreshTokenHandler = refreshTokenHandler;
+        this.cookieHandler = cookieHandler;
         setFilterProcessesUrl(LOGIN_ENDPOINT);
     }
 
@@ -65,16 +67,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authentication) throws IOException, ServletException {
         User authenticatedUser = (User)authentication.getPrincipal();
         Set<String> authorities = AuthorityUtils.authorityListToSet(authenticatedUser.getAuthorities());
-        String token = jwtHandler.createToken(authenticatedUser.getUsername(), authorities);
+        String token = jwtHandler.create(authenticatedUser.getUsername(), authorities);
         Long expires = null;
-        Map<String,Object>  tokenPayload = jwtHandler.parseToken(token);
+        Map<String,Object>  tokenPayload = jwtHandler.parse(token);
         if(tokenPayload != null) {
             expires = ((Claim)tokenPayload.get("exp")).asLong();
         }
 
         try {
-            String refreshToken = refreshTokenHandler.createRefreshToken(authenticatedUser.getUsername());
-            response.addCookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken));
+            String refreshToken = refreshTokenHandler.create(authenticatedUser.getUsername());
+            response.addCookie(cookieHandler.create(refreshToken));
         } catch (Exception e) {
             logger.info("Could not create refresh token.");
         }

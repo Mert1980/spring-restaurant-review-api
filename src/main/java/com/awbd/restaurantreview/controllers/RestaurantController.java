@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,12 +34,14 @@ public class RestaurantController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<?> create(@ModelAttribute @Valid RestaurantRequestDto restaurantDto) {
         restaurantService.create(restaurantDto);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<RestaurantResponseDto> read(@PathVariable("id") UUID id) throws BaseException {
         return ResponseEntity.ok(restaurantService.read(id));
     }
@@ -52,12 +55,14 @@ public class RestaurantController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<?> update(@ModelAttribute @Valid RestaurantRequestDto restaurantDto) throws BaseException {
         restaurantService.update(restaurantDto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<?> delete(@PathVariable("id") UUID id) throws BaseException {
         restaurantService.delete(id);
         return ResponseEntity.noContent().build();
