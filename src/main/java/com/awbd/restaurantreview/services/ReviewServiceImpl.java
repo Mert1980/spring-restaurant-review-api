@@ -2,7 +2,11 @@ package com.awbd.restaurantreview.services;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,13 +47,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewResponseDto read(UUID id) throws BaseException {
-        Optional<Review> optionalReview = reviewRepository.findById(id);
-        if (optionalReview.isEmpty()) {
-            throw new NotFoundException(id);
-        }
+    public Page<ReviewResponseDto> read(Pageable pageable) throws BaseException {
+        Page<Review> reviewsPage = reviewRepository.findAll(pageable);
 
-        return mapper.mapEntityToDto(optionalReview.get());
+        return reviewsPage.map(new Function<Review, ReviewResponseDto>() {
+            @Override
+            public ReviewResponseDto apply(Review t) {
+                ReviewResponseDto dto = mapper.mapEntityToDto(t);
+                return dto;
+            }
+        });
     }
 
     @Override
