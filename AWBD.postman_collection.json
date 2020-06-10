@@ -1,0 +1,796 @@
+{
+	"info": {
+		"_postman_id": "2fa119b5-8f90-4d83-bbdc-57a4a077ff0e",
+		"name": "AWBD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "admin@awbd.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "Mihai",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Ene",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "Admin",
+							"type": "text"
+						},
+						{
+							"key": "profilePicture",
+							"type": "file",
+							"src": "/C:/Users/Mihai/Desktop/code/restaurant review/src/main/resources/profile_picture_default.png",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"admin@awbd.com\",\n\t\"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":\"f638ab03804f4ad2b643045e3e3ddade\",\n\t\"newPassword\":\"adminnew\",\n\t\"currentPassword\":\"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/account/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"account",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "admin@awbd.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "Mihai",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Ene",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "Admin",
+							"type": "text"
+						},
+						{
+							"key": "profilePicture",
+							"type": "file",
+							"src": "/C:/Users/Mihai/Desktop/code/restaurant review/src/main/resources/profile_picture_default.png"
+						},
+						{
+							"key": "",
+							"value": "f638ab03-804f-4ad2-b643-045e3e3ddade",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/account/4d8e9713-30fa-4c5e-a331-fad0c262b875",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"account",
+						"4d8e9713-30fa-4c5e-a331-fad0c262b875"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change User Password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":\"f638ab03-804f-4ad2-b643-045e3e3ddade\",\n\t\"newPassword\":\"adminnew\",\n\t\"currentPassword\":\"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/account/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"account",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh refresh token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/account/refresh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"account",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Revoke refresh token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/account/refresh-token/revoke",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"account",
+						"refresh-token",
+						"revoke"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Restaurant",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgyNzY1N30.ECml_xCWU9QfXe53qXTJNhMxsAKmyqb4roUrRW9IQj_xmo2raA_NRi9dyHvkR11v0OOuF09MD09i8HfBO1k7aQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Restaurant",
+							"type": "text"
+						},
+						{
+							"key": "categories[0].id",
+							"value": "2D1EBC5B-7D27-4197-9CF0-E84451C5BBB1",
+							"type": "text"
+						},
+						{
+							"key": "categories[0].name",
+							"value": "Restaurant",
+							"type": "text"
+						},
+						{
+							"key": "logo",
+							"type": "file",
+							"src": "/C:/Users/Mihai/Desktop/code/restaurant review/src/main/resources/restaurant_logo_default.png"
+						},
+						{
+							"key": "address.country",
+							"value": "Romania",
+							"type": "text"
+						},
+						{
+							"key": "address.city",
+							"value": "Bucuresti",
+							"type": "text"
+						},
+						{
+							"key": "address.street",
+							"value": "Academiei",
+							"type": "text"
+						},
+						{
+							"key": "address.number",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "address.location.latitude",
+							"value": "42.00043423",
+							"type": "text"
+						},
+						{
+							"key": "address.location.longitude",
+							"value": "55.55434343",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Restaurant",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgyNjQ0NX0.p7nuz2GXkyNIomq9BukbqxTZpRaZpzn8nKYzYDk4Jv0n1q_mByjSqu_9gV-iz9sPaX6KgwG5Yo1zoD60L4D7Rw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Restaurant",
+							"type": "text"
+						},
+						{
+							"key": "categories[0].id",
+							"value": "2D1EBC5B-7D27-4197-9CF0-E84451C5BBB1",
+							"type": "text"
+						},
+						{
+							"key": "categories[0].name",
+							"value": "Restaurant",
+							"type": "text"
+						},
+						{
+							"key": "logo",
+							"type": "file",
+							"src": "/C:/Users/Mihai/Desktop/code/restaurant review/src/main/resources/restaurant_logo_default.png"
+						},
+						{
+							"key": "address.country",
+							"value": "Romania",
+							"type": "text"
+						},
+						{
+							"key": "address.city",
+							"value": "Bucuresti",
+							"type": "text"
+						},
+						{
+							"key": "address.street",
+							"value": "Academiei",
+							"type": "text"
+						},
+						{
+							"key": "address.number",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "address.location.latitude",
+							"value": "42.00043423",
+							"type": "text"
+						},
+						{
+							"key": "address.location.longitude",
+							"value": "55.55434343",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Restaurant",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant/C1EB1951-9507-4939-AF14-26F0B82398BC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant",
+						"C1EB1951-9507-4939-AF14-26F0B82398BC"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Restaurant",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant/C1EB1951-9507-4939-AF14-26F0B82398BC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant",
+						"C1EB1951-9507-4939-AF14-26F0B82398BC"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Review",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgyOTcyOH0.JLd_0t9NxuO4bK5rH5PdVFqOHgW1pdz-jfcCqF6mYnB_MP-ALZwuF9d-Mai6UNgfDrcCX0tOoJ2LdJs0k8jeiA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "text",
+							"value": "text",
+							"type": "text"
+						},
+						{
+							"key": "batroomQuality",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "staff",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "cleanliness",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "driveThru",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "deliverySpeed",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "attachments[0]",
+							"type": "file",
+							"src": "/C:/Users/Mihai/Downloads/profile.jpg"
+						},
+						{
+							"key": "userId",
+							"value": "4d8e9713-30fa-4c5e-a331-fad0c262b875",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant/C1EB1951-9507-4939-AF14-26F0B82398BC/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant",
+						"C1EB1951-9507-4939-AF14-26F0B82398BC",
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Review",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgyOTk2N30.8S84rX4xJhWvMnZyLhUZmDNVk7ryaTm5OFfv5JCg7Hz6jgiFRKO7a1nMOQAlMXaMZ86pVfioFjOCxBBnF2fEpQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "text",
+							"value": "text",
+							"type": "text"
+						},
+						{
+							"key": "batroomQuality",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "staff",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "cleanliness",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "driveThru",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "deliverySpeed",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "attachments",
+							"type": "file",
+							"src": "/C:/Users/Mihai/Downloads/profile.jpg"
+						},
+						{
+							"key": "userId",
+							"value": "4d8e9713-30fa-4c5e-a331-fad0c262b875",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "6ccc5eec-bfdd-4253-93b1-7eed842ae6e8",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant/C1EB1951-9507-4939-AF14-26F0B82398BC/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant",
+						"C1EB1951-9507-4939-AF14-26F0B82398BC",
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Reviews",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant/C1EB1951-9507-4939-AF14-26F0B82398BC/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant",
+						"C1EB1951-9507-4939-AF14-26F0B82398BC",
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Review",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

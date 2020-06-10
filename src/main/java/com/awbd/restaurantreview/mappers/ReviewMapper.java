@@ -2,6 +2,7 @@ package com.awbd.restaurantreview.mappers;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class ReviewMapper implements Mapper<Review, ReviewRequestDto, ReviewResp
     @Override
     public Review mapDtoToEntity(ReviewRequestDto dto) {
         Review review = mapper.map(dto, Review.class);
-
+        review.setCreatedAt(new Date());
         try {
             List<Attachment> attachments = new ArrayList<>();
             for(MultipartFile file : dto.getAttachments()) {

@@ -29,7 +29,8 @@ public class UserRequestDto {
     @Size(max = 25, message = "Last name can't be longer than 25 characters.")
     private String lastName;
 
-    @EnumValidator(enumClazz = RoleType.class, message = "User type is not valid.")
+    @Size(max = 25, message = "Last name can't be longer than 25 characters.")
+    //@EnumValidator(enumClazz = RoleType.class, message = "User type is not valid.")
     private String type;
 
     private MultipartFile profilePicture;
