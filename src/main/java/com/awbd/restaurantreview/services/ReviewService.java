@@ -12,6 +12,7 @@ import com.awbd.restaurantreview.exceptions.BaseException;
 public interface ReviewService {
     void create(ReviewRequestDto reviewDto);
     Page<ReviewResponseDto> read(Pageable pageable) throws BaseException;
+    ReviewResponseDto read (UUID id) throws BaseException;
     void update(ReviewRequestDto reviewDto) throws BaseException;
     void delete(UUID id) throws BaseException;
 }

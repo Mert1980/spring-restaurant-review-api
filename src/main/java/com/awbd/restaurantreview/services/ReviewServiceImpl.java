@@ -60,6 +60,17 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public ReviewResponseDto read(UUID id) throws BaseException {
+        Optional<Review> optionalReview = reviewRepository.findById(id);
+        if (optionalReview.isEmpty()) {
+            throw new NotFoundException(id);
+        }
+
+        ReviewResponseDto reviewDto = mapper.mapEntityToDto(optionalReview.get());
+
+        return reviewDto;
+    }
+    @Override
     public void update(ReviewRequestDto reviewDto) throws BaseException {
         Optional<Review> optionalReview = reviewRepository.findById(reviewDto.getId());
         if (optionalReview.isEmpty()) {

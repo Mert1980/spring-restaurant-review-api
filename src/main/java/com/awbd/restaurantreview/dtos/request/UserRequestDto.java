@@ -5,9 +5,6 @@ import javax.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.*;
 
-import com.awbd.restaurantreview.domain.RoleType;
-import com.awbd.restaurantreview.validations.EnumValidator;
-
 @AllArgsConstructor
 @Getter
 @Setter
@@ -30,7 +27,6 @@ public class UserRequestDto {
     private String lastName;
 
     @Size(max = 25, message = "Last name can't be longer than 25 characters.")
-    //@EnumValidator(enumClazz = RoleType.class, message = "User type is not valid.")
     private String type;
 
     private MultipartFile profilePicture;

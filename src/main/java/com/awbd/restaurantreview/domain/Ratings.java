@@ -26,6 +26,6 @@ public class Ratings extends BaseEntity {
 
     private int fiveStarCount;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Restaurant restaurant;
 }

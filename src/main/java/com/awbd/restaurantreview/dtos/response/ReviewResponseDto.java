@@ -3,13 +3,16 @@ package com.awbd.restaurantreview.dtos.response;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.hateoas.RepresentationModel;
+
 import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ReviewResponseDto {
+public class ReviewResponseDto extends RepresentationModel<ReviewResponseDto> {
     private UUID id;
 
     private UUID restaurantId;

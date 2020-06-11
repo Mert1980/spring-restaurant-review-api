@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
 import com.awbd.restaurantreview.domain.Attachment;
 import com.awbd.restaurantreview.domain.AttachmentType;
@@ -22,6 +23,8 @@ public class ReviewMapper implements Mapper<Review, ReviewRequestDto, ReviewResp
     @Autowired
     public ReviewMapper(ModelMapper mapper) {
         this.mapper = mapper;
+        this.mapper.getConfiguration().setAmbiguityIgnored(true);
+        this.mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
     }
 
     @Override

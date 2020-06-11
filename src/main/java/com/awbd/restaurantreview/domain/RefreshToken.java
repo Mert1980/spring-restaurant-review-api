@@ -13,7 +13,7 @@ import lombok.*;
     @Index(name = "IDX_TOKEN", columnList = "token")
 })
 public class RefreshToken extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
     @Column(length = 38, nullable = false)

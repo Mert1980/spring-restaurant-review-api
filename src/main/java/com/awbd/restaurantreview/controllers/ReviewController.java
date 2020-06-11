@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import com.awbd.restaurantreview.dtos.request.ReviewRequestDto;
 import com.awbd.restaurantreview.dtos.response.ReviewResponseDto;
@@ -49,6 +50,15 @@ public class ReviewController {
                                                         @RequestParam(name = "sort", defaultValue = "DESC") String sort,
                                                         @RequestParam(name = "sortedParam", defaultValue = "createdAt") String sortedParam) throws BaseException {
         return ResponseEntity.ok(reviewService.read(PageRequest.of(page, size, Sort.Direction.valueOf(sort), sortedParam)));
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ReviewResponseDto> readById(@PathVariable("id") UUID id) throws BaseException {
+        ReviewResponseDto review = reviewService.read(id);
+        review.add(linkTo(methodOn(ReviewController.class).readById(id)).withSelfRel());
+        review.add(linkTo(methodOn(RestaurantController.class).read(review.getRestaurantId())).withRel("restaurant"));
+        return ResponseEntity.ok(review);
     }
 
     @PutMapping(consumes = {"multipart/form-data"})

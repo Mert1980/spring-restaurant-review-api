@@ -69,6 +69,16 @@
 		{
 			"name": "Login",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -105,7 +115,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2MTI3MX0.-A1UTxFq0BPxiXcudaScld9gt7eUbsfJGksKztBtt5DVUc8dYcUx5R4SbHYv9lIwHRyYiZ2iAKZc_9_AEaEZoQ",
 							"type": "string"
 						}
 					]
@@ -145,7 +155,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2MTI3MX0.-A1UTxFq0BPxiXcudaScld9gt7eUbsfJGksKztBtt5DVUc8dYcUx5R4SbHYv9lIwHRyYiZ2iAKZc_9_AEaEZoQ",
 							"type": "string"
 						}
 					]
@@ -157,7 +167,7 @@
 					"formdata": [
 						{
 							"key": "id",
-							"value": "",
+							"value": "5c9348eb557d4151959a7c4199cdbd3b",
 							"type": "text"
 						},
 						{
@@ -172,7 +182,7 @@
 						},
 						{
 							"key": "firstName",
-							"value": "Mihai",
+							"value": "Mihai Lucian",
 							"type": "text"
 						},
 						{
@@ -225,7 +235,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2MTI3MX0.-A1UTxFq0BPxiXcudaScld9gt7eUbsfJGksKztBtt5DVUc8dYcUx5R4SbHYv9lIwHRyYiZ2iAKZc_9_AEaEZoQ",
 							"type": "string"
 						}
 					]
@@ -256,7 +266,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2MTQ0MX0.m2sdSx6mAyXRU8cm_ljxSwG4FSXVSuJrYMwtz1VpDK9h5PuJL1floICdOFhCPkrstbX3_AGz8Lk6O3T9EVFPDg",
 							"type": "string"
 						}
 					]
@@ -265,7 +275,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userId\":\"f638ab03-804f-4ad2-b643-045e3e3ddade\",\n\t\"newPassword\":\"adminnew\",\n\t\"currentPassword\":\"admin\"\n}",
+					"raw": "{\n\t\"userId\":\"516354b9-c0f3-4fa6-96a5-cc8116438cc9\",\n\t\"newPassword\":\"adminnew\",\n\t\"currentPassword\":\"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -296,7 +306,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2NTYzN30.3Y7nzR-0ijtxyEPknH7axwrE3YhCIZnhRDnJ5y2pyyvoQlzIZ5K1RjwTo7P03uwmul1-gWorI_2daO5X9jzOPw",
 							"type": "string"
 						}
 					]
@@ -327,7 +337,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgwODU5NH0.5ckUWPKk5aythlZ94DZwOr7kMLZLunbBoNaQ7HOvnFrr-7myRIcNG-qW1-d3UgYXkvDSgQhnMCDFWiBz8r_nWw",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2NjM0MH0.m5at8NZM7ZYB1FwhZ10PjzRjwR0SMPVqjOxvZfn3kLZFtdwW2Zio3vKfh0pjuBRgY0GY2LyVDLHYKq5GXdii1Q",
 							"type": "string"
 						}
 					]
@@ -362,7 +372,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgyNzY1N30.ECml_xCWU9QfXe53qXTJNhMxsAKmyqb4roUrRW9IQj_xmo2raA_NRi9dyHvkR11v0OOuF09MD09i8HfBO1k7aQ",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2NjU0NX0.cw6-XrIHr8lo4GLONf4JvN2tF661HnwXY3bN06m59oHsfpgvY8bMQ0gjbq9WgkXxaE7NBpUDpHxI_EYZronbCg",
 							"type": "string"
 						}
 					]
@@ -607,7 +617,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTgyOTcyOH0.JLd_0t9NxuO4bK5rH5PdVFqOHgW1pdz-jfcCqF6mYnB_MP-ALZwuF9d-Mai6UNgfDrcCX0tOoJ2LdJs0k8jeiA",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2NTIyNn0.NiioqHCDcjVkjCAs5x3QlHr6dGUy6BtD-jZN59BSTzXQrWBXYxW19klru5qHVx9qtrKdiJxRWUgJQhwAGGHZcA",
 							"type": "string"
 						}
 					]
@@ -761,6 +771,16 @@
 		{
 			"name": "Get All Reviews",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2NTIyNn0.NiioqHCDcjVkjCAs5x3QlHr6dGUy6BtD-jZN59BSTzXQrWBXYxW19klru5qHVx9qtrKdiJxRWUgJQhwAGGHZcA",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -775,6 +795,39 @@
 						"restaurant",
 						"C1EB1951-9507-4939-AF14-26F0B82398BC",
 						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Review by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhd2JkLmNvbSIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTU5MTg2NTIyNn0.NiioqHCDcjVkjCAs5x3QlHr6dGUy6BtD-jZN59BSTzXQrWBXYxW19klru5qHVx9qtrKdiJxRWUgJQhwAGGHZcA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/restaurant/C1EB1951-9507-4939-AF14-26F0B82398BC/review/29eba0df-b538-48b8-8919-5f9b6c7140a4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"restaurant",
+						"C1EB1951-9507-4939-AF14-26F0B82398BC",
+						"review",
+						"29eba0df-b538-48b8-8919-5f9b6c7140a4"
 					]
 				}
 			},
